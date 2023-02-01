@@ -23,7 +23,6 @@
     "sequelize": "^6.28.0"
   },
   "devDependencies": {
-    "prettier": "^2.8.3",
     "sequelize-cli": "^6.6.0"
   }
 }
