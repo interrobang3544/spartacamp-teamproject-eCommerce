@@ -6,20 +6,8 @@ class UserService {
 
   adminFindAllUsers = async (limit, offset) => {
     const users = await this.userRepository.adminFindAllUsers(limit, offset);
-    // console.log(users);
+
     return users
-    // return users.map((user) => {
-    //   return {
-    //     userId: user.userId,
-    //     id: user.id,
-    //     password: user.password,
-    //     nickname: user.nickname,
-    //     email: user.email,
-    //     address: user.address,
-    //     createdAt: user.createdAt,
-    //     updatedAt: user.updatedAt,
-    //   };
-    // });
   };
 
   adminFindUsersBySearchWord = async (searchWord) => {

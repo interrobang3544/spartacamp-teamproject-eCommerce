@@ -6,14 +6,19 @@ class ProductRepository {
     this.productModel = ProductModel;
   }
 
-  adminFindAllProducts = async () => {
-    const users = await this.productModel.findAll();
+  adminFindAllProducts = async (limit, offset) => {
+    const products = await this.productModel.findAndCountAll({
+      raw: true,
+      offset: offset,
+      limit: limit,
+      order: [['updatedAt', 'ASC']],
+  });
 
-    return users;
+    return products;
   };
 
   adminFindProductsBySearchWord = async (searchWord) => {
-    const users = await this.productModel.findAll({
+    const products = await this.productModel.findAll({
       where: {
         [Op.or]: [
           {
@@ -45,7 +50,7 @@ class ProductRepository {
       },
     });
 
-    return users;
+    return products;
   };
 }
 
