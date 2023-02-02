@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 'use strict';
-const {
-  Model
-} = require('sequelize');
-=======
-"use strict";
-const { Model } = require("sequelize");
->>>>>>> upstream/dev
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Basket extends Model {
     /**
@@ -18,23 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-<<<<<<< HEAD
-  Basket.init({
-    basketId: {
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-    },
-    userId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Basket',
-  });
-  return Basket;
-};
-=======
   Basket.init(
     {
       basketId: {
@@ -48,9 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Basket",
+      modelName: 'Basket',
     }
   );
   return Basket;
 };
->>>>>>> upstream/dev
