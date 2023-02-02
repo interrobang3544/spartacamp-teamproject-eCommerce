@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
+app.use('/users', usersRouter);
 
 app.listen(port, () => {
   console.log(port, '포트로 서버가 켜졌어요!');
