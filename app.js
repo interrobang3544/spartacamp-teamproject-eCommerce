@@ -4,6 +4,7 @@ const port = 8080;
 
 const adminRouter = require('./routes/admin.routes');
 const authRouter = require('./routes/auth.routes');
+const usersRouter = require('./routes/users.routes');
 
 app.use(express.json());
 app.use(express.urlencoded());
