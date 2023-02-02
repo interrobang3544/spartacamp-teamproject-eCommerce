@@ -1,11 +1,11 @@
-const UserService = require('../services/users.service');
+const ProductService = require('../services/products.service');
 
-class UsersController {
-  userService = new UserService();
+class ProductsController {
+  productService = new ProductService();
 
-  adminGetAllUsers = async (req, res, next) => {
+  adminGetAllProducts = async (req, res, next) => {
     try {
-      const usersInfo = await this.userService.adminFindAllUsers();
+      const usersInfo = await this.productService.adminFindAllProducts();
       return res.status(200).json({ data: usersInfo });
     } catch (error) {
       return res.status(400).json({
@@ -14,10 +14,10 @@ class UsersController {
     }
   };
 
-  adminGetUsersBySearchWord = async (req, res, next) => {
+  adminGetProductsBySearchWord = async (req, res, next) => {
     const { searchword } = req.params;
     try {
-      const usersInfo = await this.userService.adminFindUsersBySearchWord(searchword);
+      const usersInfo = await this.productService.adminFindProductsBySearchWord(searchword);
       return res.status(200).json({ data: usersInfo });
     } catch (error) {
       return res.status(400).json({
@@ -27,4 +27,4 @@ class UsersController {
   };
 }
 
-module.exports = UsersController;
+module.exports = ProductsController;
