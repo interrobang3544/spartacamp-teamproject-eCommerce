@@ -1,0 +1,52 @@
+#main-container {
+  width: 90%;
+  margin: auto;
+}
+
+table {
+  margin: auto;
+  text-align: center;
+}
+
+.tg {
+  border-collapse: collapse;
+  border-color: #aabcfe;
+  border-spacing: 0;
+  border-style: solid;
+  border-width: 1px;
+}
+.tg td {
+  background-color: #e8edff;
+  border-color: #aabcfe;
+  border-style: solid;
+  border-width: 0px;
+  color: #669;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  padding: 10px 5px;
+  word-break: normal;
+}
+.tg th {
+  background-color: #b9c9fe;
+  border-color: #aabcfe;
+  border-style: solid;
+  border-width: 0px;
+  color: #039;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  overflow: hidden;
+  padding: 10px 5px;
+  word-break: normal;
+}
+.tg .tg-c3ow {
+  border-color: inherit;
+  text-align: center;
+  vertical-align: top;
+}
+.tg .tg-xwyw {
+  border-color: #000000;
+  text-align: center;
+  vertical-align: middle;
+}
