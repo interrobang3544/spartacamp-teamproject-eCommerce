@@ -1,9 +1,9 @@
-const AuthService = require('../services/auth.service');
+const UserService = require('../services/users.service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-class AuthController {
-  authService = new AuthService();
+class ApiController {
+  userService = new UserService();
   // 회원가입(id 동일하면 안됨!)
   join = async (req, res, next) => {
     try {
@@ -12,7 +12,7 @@ class AuthController {
         return res.status(400).json({ message: '모든 값을 입력하세요.' });
       }
 
-      const foundById = await this.authService.findById(id);
+      const foundById = await this.userService.findById(id);
 
       if (foundById.length > 0) {
         return res
@@ -20,7 +20,7 @@ class AuthController {
           .json({ message: `${id}는 이미 존재하는 아이디입니다.` });
       }
 
-      const foundByNickname = await this.authService.findByNickname(nickname);
+      const foundByNickname = await this.userService.findByNickname(nickname);
 
       if (foundByNickname.length > 0) {
         return res
@@ -30,7 +30,7 @@ class AuthController {
 
       const hashed = await bcrypt.hash(password, 12);
 
-      const createUser = await this.authService.createUser(
+      const createUser = await this.userService.createUser(
         id,
         hashed,
         nickname,
@@ -51,7 +51,7 @@ class AuthController {
     try {
       const { id, password } = req.body;
 
-      const user = await this.authService.findById(id);
+      const user = await this.userService.findById(id);
       // console.log(user, 456465);
       const passwordTest = await bcrypt.compare(password, user[0].password);
       // console.log(passwordTest, 78978978);
@@ -88,4 +88,4 @@ class AuthController {
   };
 }
 
-module.exports = AuthController;
+module.exports = ApiController;

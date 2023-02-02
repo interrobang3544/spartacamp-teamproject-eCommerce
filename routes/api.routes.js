@@ -3,12 +3,12 @@ const router = express.Router();
 
 const authMiddleware = require('../middleware/auth');
 
-const AuthController = require('../controllers/auth.controller');
-const authController = new AuthController();
+const ApiController = require('../controllers/api.controller');
+const apiController = new ApiController();
 
-router.post('/join', authController.join);
-router.post('/login', authController.login);
-router.get('/logout', authController.logout);
+router.post('/join', apiController.join);
+router.post('/login', apiController.login);
+router.get('/logout', apiController.logout);
 
 //토큰검증API
 router.get('/login/check', authMiddleware, async (req, res) => {
