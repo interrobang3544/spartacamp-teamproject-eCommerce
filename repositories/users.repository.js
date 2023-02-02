@@ -1,4 +1,4 @@
-const sequelize = require("sequelize");
+const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
 class UserRepository {
@@ -6,9 +6,14 @@ class UserRepository {
     this.userModel = UserModel;
   }
 
-  adminFindAllUsers = async () => {
-    const users = await this.userModel.findAll();
-
+  adminFindAllUsers = async (limit, offset) => {
+    const users = await this.userModel.findAndCountAll({
+      raw: true,
+      offset: offset,
+      limit: limit,
+      order: [['updatedAt', 'ASC']],
+    });
+    // console.log(users)
     return users;
   };
 
