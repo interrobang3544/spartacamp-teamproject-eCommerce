@@ -63,6 +63,7 @@ class ApiController {
 
       const accessToken = jwt.sign(
         {
+          userId: user[0].userId,
           id: user[0].id,
           userNickname: user[0].nickname,
         },

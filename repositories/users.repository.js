@@ -32,9 +32,9 @@ class UserRepository {
     return userData;
   };
 
-  getUserDataById = async (id) => {
+  getUserDataById = async (userId) => {
     try {
-      const userData = await this.userModel.findAll({ where: { id: id } });
+      const userData = await this.userModel.findAll({ where: { userId } });
       return userData;
     } catch (error) {
       error.status = 500;
