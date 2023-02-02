@@ -6,6 +6,7 @@ const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
 
+app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use('/admin', adminRouter);

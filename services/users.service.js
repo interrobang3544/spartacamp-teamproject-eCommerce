@@ -75,8 +75,16 @@ class UserService {
     }
   };
 
-  adminFindAllUsers = async () => {
-    const users = await this.userRepository.adminFindAllUsers();
+  adminFindAllUsers = async (limit, offset) => {
+    const users = await this.userRepository.adminFindAllUsers(limit, offset);
+
+    return users
+  };
+
+  adminFindUsersBySearchWord = async (searchWord) => {
+    const users = await this.userRepository.adminFindUsersBySearchWord(
+      searchWord
+    );
     return users.map((user) => {
       return {
         userId: user.userId,

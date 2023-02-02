@@ -1,0 +1,23 @@
+#main-container {
+  width: 90%;
+  margin: auto;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-box {
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid rgb(158, 158, 158);
+}
+
+.product {
+  margin: 0 20px;
+  text-align: center;
+}
