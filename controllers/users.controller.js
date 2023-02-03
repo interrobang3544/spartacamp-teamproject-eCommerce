@@ -22,7 +22,23 @@ class UsersController {
       const { password, nickname, email, address } = req.body;
 
       if (!password || !nickname || !email || !address) {
-        return res.status(400).json({ message: '빈 값이 있습니다.' });
+        return res.status(400).json({ errorMessage: '빈 값이 있습니다.' });
+      }
+
+      // 비밀번호: 영어대소문자숫자
+      const passwordCheck = /^[A-Za-z0-9]{3,}$/;
+      // 닉네임:한글포함영어대소문자숫자
+      const nicknameCheck = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
+      // 이메일: aaa@aaa.aaa
+      const emailCheck = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+      if (
+        !passwordCheck.test(password) ||
+        !nicknameCheck.test(nickname) ||
+        !emailCheck.test(email)
+      ) {
+        return res.status(412).json({
+          errorMessage: '형식이 올바르지 않습니다. 다시 확인해주세요.',
+        });
       }
 
       const foundByUserId = await this.userService.findByUserId(userId);
@@ -30,9 +46,9 @@ class UsersController {
         const foundByNickname = await this.userService.findByNickname(nickname);
 
         if (foundByNickname.length > 0) {
-          return res
-            .status(409)
-            .json({ message: `${nickname}는 이미 존재하는 닉네임입니다.` });
+          return res.status(409).json({
+            errorMessage: `${nickname}는 이미 존재하는 닉네임입니다.`,
+          });
         }
       }
 
@@ -53,7 +69,7 @@ class UsersController {
       console.log(error);
       return res
         .status(400)
-        .json({ message: '회원 정보 수정에 실패하였습니다.' });
+        .json({ errorMessage: '회원 정보 수정에 실패하였습니다.' });
     }
   };
 
