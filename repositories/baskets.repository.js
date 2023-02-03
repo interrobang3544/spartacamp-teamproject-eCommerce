@@ -7,7 +7,7 @@ class BasketRepository {
   }
 
   //* 장바구니 목록 가져오기
-  //- 해당 유저의 바구니 데이터를 모두 가져온다.
+  //- 해당 유저의 생성일, 수정일을 제외한 바구니 데이터를 모두 가져온다.
   findBasket = async (userId) => {
     const baskets = await this.basketModel.findAll({
       where: {
