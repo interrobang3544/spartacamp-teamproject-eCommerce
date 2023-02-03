@@ -85,10 +85,10 @@ class ProductRepository {
     return createProductData;
   };
 
-  findProductById = async(productId) => {
+  findProductById = async (productId) => {
     const product = await this.productModel.findByPk(productId);
     return product;
-  }
+  };
 
   deleteProduct = async (productId) => {
     const deleteProductData = await this.productModel.destroy({
