@@ -2,9 +2,6 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
 ### Node ###
-# config
-config/
-
 # Logs
 logs
 *.log
@@ -143,5 +140,8 @@ dist
 
 # SvelteKit build / generate output
 .svelte-kit
+
+# project settings
+config/config.json
 
 # End of https://www.toptal.com/developers/gitignore/api/node

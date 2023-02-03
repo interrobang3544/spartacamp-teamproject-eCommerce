@@ -12,6 +12,25 @@ class ApiController {
         return res.status(400).json({ message: '모든 값을 입력하세요.' });
       }
 
+      // 아이디: 영어대소문자숫자
+      const idCheck = /^[A-Za-z0-9]{3,}$/;
+      // 비밀번호: 영어대소문자숫자
+      const passwordCheck = /^[A-Za-z0-9]{3,}$/;
+      // 닉네임:한글포함영어대소문자숫자
+      const nicknameCheck = /[^?a-zA-Z0-9/]/;
+      // 이메일: aaa@aaa.aaa
+      const emailCheck = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+      if (
+        !idCheck.test(id) ||
+        !passwordCheck.test(password) ||
+        !nicknameCheck.test(nickname) ||
+        !emailCheck.test(email)
+      ) {
+        return res.status(412).json({
+          errorMessage: '형식이 올바르지 않습니다. 다시 확인해주세요.',
+        });
+      }
+
       const foundById = await this.userService.findById(id);
 
       if (foundById.length > 0) {
