@@ -132,11 +132,10 @@ class UserService {
     }
   };
 
-  changeUserData = async (userId, hashed, nickname, email, address) => {
+  changeUserData = async (userId, nickname, email, address) => {
     try {
       const changeUserData = await this.userRepository.changeUserData(
         userId,
-        hashed,
         nickname,
         email,
         address

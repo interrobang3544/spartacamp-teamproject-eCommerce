@@ -57,11 +57,10 @@ class UserRepository {
     }
   };
 
-  changeUserData = async (userId, hashed, nickname, email, address) => {
+  changeUserData = async (userId, nickname, email, address) => {
     try {
       const newUserData = await this.userModel.update(
         {
-          password: hashed,
           nickname: nickname,
           email: email,
           address: address,

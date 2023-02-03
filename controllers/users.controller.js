@@ -19,23 +19,17 @@ class UsersController {
   changeUserData = async (req, res, next) => {
     try {
       const userId = res.locals.user.userId;
-      const { password, nickname, email, address } = req.body;
+      const { nickname, email, address } = req.body;
 
-      if (!password || !nickname || !email || !address) {
+      if (!nickname || !email || !address) {
         return res.status(400).json({ errorMessage: '빈 값이 있습니다.' });
       }
 
-      // 비밀번호: 영어대소문자숫자
-      const passwordCheck = /^[A-Za-z0-9]{3,}$/;
       // 닉네임:한글포함영어대소문자숫자
       const nicknameCheck = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
       // 이메일: aaa@aaa.aaa
       const emailCheck = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-      if (
-        !passwordCheck.test(password) ||
-        !nicknameCheck.test(nickname) ||
-        !emailCheck.test(email)
-      ) {
+      if (!nicknameCheck.test(nickname) || !emailCheck.test(email)) {
         return res.status(412).json({
           errorMessage: '형식이 올바르지 않습니다. 다시 확인해주세요.',
         });
@@ -52,11 +46,8 @@ class UsersController {
         }
       }
 
-      const hashed = await bcrypt.hash(password, 12);
-
       const newUserData = await this.userService.changeUserData(
         userId,
-        hashed,
         nickname,
         email,
         address

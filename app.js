@@ -24,6 +24,10 @@ app.get('/join', (req, res) => {
   res.render('indexLogin', { join: true });
 });
 
+app.get('/mypage', (req, res) => {
+  res.render('mypage');
+});
+
 app.get('/admin-users', (req, res) => {
   res.render('admin-users');
 });
