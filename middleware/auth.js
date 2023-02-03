@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { user } = require('../models');
+const { User } = require('../models');
 
 module.exports = async (req, res, next) => {
   const { cookie } = req.headers;
@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
       'my-secrect-key' //secretkey
     );
 
-    user.findByPk(userId).then((user) => {
+    User.findByPk(userId).then((user) => {
       res.locals.user = user;
       next();
     });
