@@ -84,7 +84,7 @@
                   type="file"
                   name="product-img"
                   id="product-photo"
-                  onchange="loadFile(this)"
+                  onchange="loadFile(this, 'image')"
                 />
               </div>
               <label for="product-name" class="col-form-label">상품명</label>
@@ -105,7 +105,9 @@
                 id="product-explanation"
               />
 
-              <label for="product-price" class="col-form-label">상품 가격</label>
+              <label for="product-price" class="col-form-label"
+                >상품 가격</label
+              >
               <input
                 type="text"
                 name="price"
@@ -113,7 +115,9 @@
                 id="product-price"
               />
 
-              <label for="product-quantity" class="col-form-label">상품 수량</label>
+              <label for="product-quantity" class="col-form-label"
+                >상품 수량</label
+              >
               <input
                 type="text"
                 name="quantity"
@@ -152,9 +156,16 @@
           <div class="modal-body">
             <form
               method="post"
-              action="/admin/products"
+              action="/admin/products/modify"
               enctype="multipart/form-data"
+              id="modify-modal-body"
             >
+              <input type="hidden" name="modifyProductId" id="modify-product-id" />
+              <input
+                type="hidden"
+                name="modifyProductPhoto"
+                id="modify-productPhoto"
+              />
               <label for="modify-product-photo" class="col-form-label"
                 >상품 이미지</label
               >
@@ -164,15 +175,17 @@
                 </div>
                 <input
                   type="file"
-                  name="product-img"
+                  name="modify-product-img"
                   id="modify-product-photo"
-                  onchange="loadFile2(this)"
+                  onchange="loadFile(this, 'modify-image')"
                 />
               </div>
-              <label for="modify-product-name" class="col-form-label">상품명</label>
+              <label for="modify-product-name" class="col-form-label"
+                >상품명</label
+              >
               <input
                 type="text"
-                name="productName"
+                name="modifyProductName"
                 class="form-control"
                 id="modify-product-name"
               />
@@ -182,31 +195,37 @@
               >
               <input
                 type="text"
-                name="productExp"
+                name="modifyProductExp"
                 class="form-control"
                 id="modify-product-explanation"
               />
 
-              <label for="modify-product-price" class="col-form-label">상품 가격</label>
+              <label for="modify-product-price" class="col-form-label"
+                >상품 가격</label
+              >
               <input
                 type="text"
-                name="price"
+                name="modifyPrice"
                 class="form-control"
                 id="modify-product-price"
               />
 
-              <label for="modify-product-quantity" class="col-form-label">상품 수량</label>
+              <label for="modify-product-quantity" class="col-form-label"
+                >상품 수량</label
+              >
               <input
                 type="text"
-                name="quantity"
+                name="modifyQuantity"
                 class="form-control"
                 id="modify-product-quantity"
               />
 
-              <label for="modify-product-participant" class="col-form-label">참여자 수</label>
+              <label for="modify-product-participant" class="col-form-label"
+                >참여자 수</label
+              >
               <input
                 type="text"
-                name="userCount"
+                name="modifyUserCount"
                 class="form-control"
                 id="modify-product-participant"
               />

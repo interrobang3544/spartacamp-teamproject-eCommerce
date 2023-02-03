@@ -48,7 +48,7 @@ function getProducts(page) {
           <div>${data[i].userCount}</div>
         </div>
         <div class="product">
-          <button type="button" class="btn btn-primary btn-modify" onclick="customModal2('${data[i].productPhoto}','${data[i].productName}', '${data[i].productExp}', ${data[i].price}, ${data[i].quantity}, ${data[i].userCount})">수정</button>
+          <button type="button" class="btn btn-primary btn-modify" onclick="customModal2(${data[i].productId},'${data[i].productPhoto}','${data[i].productName}', '${data[i].productExp}', ${data[i].price}, ${data[i].quantity}, ${data[i].userCount})">수정</button>
           <button type="button" class="btn btn-primary btn-delete" onclick="deleteProduct(${data[i].productId}, '${data[i].productPhoto}')">삭제</button>
         </div>
         `;
@@ -82,6 +82,35 @@ function applyProduct() {
     });
 }
 
+// function updateProduct(productId) {
+//   const productPhoto = document.getElementById('modify-product-name').value;
+//   const productName = document.getElementById('modify-product-name').value;
+//   const productExp = document.getElementById(
+//     'modify-product-explanation'
+//   ).value;
+//   const price = document.getElementById('modify-product-price').value;
+//   const quantity = document.getElementById('modify-product-quantity').value;
+//   const userCount = document.getElementById('modify-product-participant').value;
+
+//   axios
+//     .patch(`admin/products/${productId}`, {
+//       data: {
+//         productName,
+//         productExp,
+//         price,
+//         quantity,
+//         userCount
+//       },
+//     })
+//     .then((response) => {
+//       console.log(response);
+//       window.location.replace(`/admin-products`);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// }
+
 function deleteProduct(productId, productPhoto) {
   axios
     .delete(`admin/products/${productId}`, {
@@ -106,35 +135,35 @@ function customModal() {
 
 // 상품 수정 모달창
 const productModifyModal = new bootstrap.Modal('#productModifyModal');
-function customModal2(productPhoto, productName, productExp, price, quantity, userCount) {
-  let oldImage = document.getElementById('modify-image')
-  oldImage.src = productPhoto
+function customModal2(
+  productId,
+  productPhoto,
+  productName,
+  productExp,
+  price,
+  quantity,
+  userCount
+) {
+  let oldImage = document.getElementById('modify-image');
+  oldImage.src = productPhoto;
   oldImage.style.width = '100%';
   oldImage.style.height = '100%';
   oldImage.style.objectFit = 'contain';
-  document.getElementById('modify-product-name').value = productName
-  document.getElementById('modify-product-explanation').value = productExp
-  document.getElementById('modify-product-price').value = price
-  document.getElementById('modify-product-quantity').value = quantity
-  document.getElementById('modify-product-participant').value = userCount
+  document.getElementById('modify-product-id').value = productId;
+  document.getElementById('modify-productPhoto').value = productPhoto;
+  document.getElementById('modify-product-name').value = productName;
+  document.getElementById('modify-product-explanation').value = productExp;
+  document.getElementById('modify-product-price').value = price;
+  document.getElementById('modify-product-quantity').value = quantity;
+  document.getElementById('modify-product-participant').value = userCount;
   productModifyModal.show();
+  ;
 }
 
 // 상품 등록 모달창 이미지
-function loadFile(input) {
+function loadFile(input, elementId) {
   let file = input.files[0];
-  let newImage = document.getElementById('image');
-  newImage.src = URL.createObjectURL(file);
-
-  newImage.style.width = '100%';
-  newImage.style.height = '100%';
-  newImage.style.objectFit = 'contain';
-}
-
-// 상품 수정 모달창 이미지
-function loadFile2(input) {
-  let file = input.files[0];
-  let newImage = document.getElementById('modify-image');
+  let newImage = document.getElementById(elementId);
   newImage.src = URL.createObjectURL(file);
 
   newImage.style.width = '100%';

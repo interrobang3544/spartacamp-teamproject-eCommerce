@@ -23,6 +23,11 @@ router.get(
   '/products/search/:searchword',
   productsController.adminGetProductsBySearchWord
 );
+router.post(
+  '/products/modify',
+  upload.single('modify-product-img'),
+  productsController.adminUpdateProduct
+);
 router.delete('/products/:productId', productsController.adminDeleteProduct);
 
 module.exports = router;

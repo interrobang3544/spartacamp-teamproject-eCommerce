@@ -73,10 +73,34 @@ class ProductRepository {
     return createProductData;
   };
 
-  findProductById = async(productId) => {
+  findProductById = async (productId) => {
     const product = await this.productModel.findByPk(productId);
     return product;
-  }
+  };
+
+  updateProduct = async (
+    productId,
+    productName,
+    productExp,
+    price,
+    productPhoto,
+    quantity,
+    userCount
+  ) => {
+    const updateProductData = await this.productModel.update(
+      {
+        productName,
+        productExp,
+        price,
+        productPhoto,
+        quantity,
+        userCount,
+      },
+      { where: { productId } }
+    );
+
+    return updateProductData;
+  };
 
   deleteProduct = async (productId) => {
     const deleteProductData = await this.productModel.destroy({

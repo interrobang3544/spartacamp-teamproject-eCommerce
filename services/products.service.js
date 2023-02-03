@@ -5,12 +5,17 @@ class ProductService {
   ProductRepository = new ProductRepository(Product);
 
   adminFindAllProducts = async (limit, offset) => {
-    const products = await this.ProductRepository.adminFindAllProducts(limit, offset);
-    return products
+    const products = await this.ProductRepository.adminFindAllProducts(
+      limit,
+      offset
+    );
+    return products;
   };
 
   adminFindProductsBySearchWord = async (searchWord) => {
-    const products = await this.ProductRepository.adminFindProductsBySearchWord(searchWord);
+    const products = await this.ProductRepository.adminFindProductsBySearchWord(
+      searchWord
+    );
     return products.map((product) => {
       return {
         productId: product.productId,
@@ -25,14 +30,21 @@ class ProductService {
     });
   };
 
-  createProduct = async (productName, productExp, price, productPhoto, quantity, userCount) => {
+  createProduct = async (
+    productName,
+    productExp,
+    price,
+    productPhoto,
+    quantity,
+    userCount
+  ) => {
     const createProductData = await this.ProductRepository.createProduct(
       productName,
       productExp,
       price,
       productPhoto,
       quantity,
-      userCount,
+      userCount
     );
 
     return {
@@ -44,6 +56,45 @@ class ProductService {
       userCount: createProductData.userCount,
       createdAt: createProductData.createdAt,
       updatedAt: createProductData.updatedAt,
+    };
+  };
+
+  updateProduct = async (
+    productId,
+    productName,
+    productExp,
+    price,
+    productPhoto,
+    quantity,
+    userCount
+  ) => {
+    const findProduct = await this.ProductRepository.findProductById(productId);
+    if (!findProduct) throw new Error("Review doesn't exist");
+
+    await this.ProductRepository.updateProduct(
+      productId,
+      productName,
+      productExp,
+      price,
+      productPhoto,
+      quantity,
+      userCount
+    );
+
+    const updateProduct = await this.ProductRepository.findProductById(
+      productId
+    );
+
+    return {
+      productId: updateProduct.productId,
+      productName: updateProduct.productName,
+      productExp: updateProduct.productExp,
+      price: updateProduct.price,
+      productPhoto: updateProduct.productPhoto,
+      quantity: updateProduct.quantity,
+      userCount: updateProduct.userCount,
+      createdAt: updateProduct.createdAt,
+      updatedAt: updateProduct.updatedAt,
     };
   };
 

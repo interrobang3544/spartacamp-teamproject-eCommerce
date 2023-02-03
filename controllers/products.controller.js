@@ -17,6 +17,7 @@ class ProductsController {
         data: productsInfo.rows,
       });
     } catch (error) {
+      console.log(error)
       return res.status(400).json({
         errorMessage: '회원 정보 조회에 실패하였습니다.',
       });
@@ -51,11 +52,48 @@ class ProductsController {
     // res.status(201).json({ data: createProductData });
   };
 
+  adminUpdateProduct = async (req, res, next) => {
+    console.log(req.body, req.file)
+    const {
+      modifyProductId,
+      modifyProductName,
+      modifyProductExp,
+      modifyPrice,
+      modifyProductPhoto,
+      modifyQuantity,
+      modifyUserCount,
+    } = req.body;
+
+    let newProductPhoto = modifyProductPhoto
+
+    if (req.file) {
+      try {
+        fs.unlinkSync('./static' + modifyProductPhoto.substr(1));
+      } catch (error) {
+        console.log(error);
+      }
+      newProductPhoto = './uploads/' + req.file.filename;
+    }
+    
+
+    const updateProduct = await this.productService.updateProduct(
+      modifyProductId,
+      modifyProductName,
+      modifyProductExp,
+      modifyPrice,
+      newProductPhoto,
+      modifyQuantity,
+      modifyUserCount,
+    );
+
+    res.redirect('/admin-products');
+  };
+
   adminDeleteProduct = async (req, res, next) => {
     const { productId } = req.params;
     const { productPhoto } = req.body;
     const deleteProduct = await this.productService.deleteProduct(productId);
-    
+
     try {
       fs.unlinkSync('./static' + productPhoto.substr(1));
     } catch (error) {
