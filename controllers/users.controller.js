@@ -25,12 +25,15 @@ class UsersController {
         return res.status(400).json({ message: '빈 값이 있습니다.' });
       }
 
-      const foundByNickname = await this.userService.findByNickname(nickname);
+      const foundByUserId = await this.userService.findByUserId(userId);
+      if (nickname !== foundByUserId[0]['nickname']) {
+        const foundByNickname = await this.userService.findByNickname(nickname);
 
-      if (foundByNickname.length > 0) {
-        return res
-          .status(409)
-          .json({ message: `${nickname}는 이미 존재하는 닉네임입니다.` });
+        if (foundByNickname.length > 0) {
+          return res
+            .status(409)
+            .json({ message: `${nickname}는 이미 존재하는 닉네임입니다.` });
+        }
       }
 
       const hashed = await bcrypt.hash(password, 12);

@@ -27,6 +27,25 @@ class UserService {
     }
   };
 
+  findByUserId = async (userId) => {
+    try {
+      const userByUserId = await this.userRepository.getUserDataById(userId);
+
+      return userByUserId.map((user) => {
+        return {
+          userId: user.userId,
+          id: user.id,
+          password: user.password,
+          nickname: user.nickname,
+          email: user.email,
+          address: user.address,
+        };
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+
   findByNickname = async (nickname) => {
     try {
       const userByNIckname = await this.userRepository.findByNickname(nickname);
