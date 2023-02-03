@@ -19,6 +19,23 @@
 }
 
 .product {
-  margin: 0 20px;
+  margin: 0 10px;
   text-align: center;
+}
+
+.img-box {
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #ccc;   
+}
+
+#image-show {
+  width: 100%;
+  height: 200px;
+  padding: 20px;
+}
+
+.btn-confirm {
+  margin-top: 10px;
+  float: right;
 }

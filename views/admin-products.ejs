@@ -73,7 +73,20 @@
               action="/admin/products"
               enctype="multipart/form-data"
             >
-              <input type="file" name="product-img" />
+              <label for="product-photo" class="col-form-label"
+                >상품 이미지</label
+              >
+              <div class="img-box">
+                <div id="image-show">
+                  <img id="image" />
+                </div>
+                <input
+                  type="file"
+                  name="product-img"
+                  id="product-photo"
+                  onchange="loadFile(this)"
+                />
+              </div>
               <label for="product-name" class="col-form-label">상품명</label>
               <input
                 type="text"

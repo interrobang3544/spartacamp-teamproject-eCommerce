@@ -98,3 +98,14 @@ function customAlert(text, confirmCallback) {
     $('#alertModal .btn-confirm').click(confirmCallback);
   }
 }
+
+// 모달창 이미지
+function loadFile(input) {
+  let file = input.files[0];
+  let newImage = document.getElementById('image');
+  newImage.src = URL.createObjectURL(file);
+
+  newImage.style.width = '100%';
+  newImage.style.height = '100%';
+  newImage.style.objectFit = 'contain';
+}

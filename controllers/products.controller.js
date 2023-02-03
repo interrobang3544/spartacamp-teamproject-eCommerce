@@ -35,19 +35,6 @@ class ProductsController {
     }
   };
 
-  // adminCreateProduct = async (req, res, next) => {
-  //   const { productName, productExp, price, quantity, userCount } = req.body;
-  //   const createProductData = await this.productService.createProduct(
-  //     productName,
-  //     productExp,
-  //     price,
-  //     quantity,
-  //     userCount
-  //   );
-
-  //   res.status(201).json({ data: createProductData });
-  // };
-
   adminCreateProduct = async (req, res, next) => {
     console.log(req.body)
     const { productName, productExp, price, quantity } = req.body;
