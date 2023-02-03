@@ -1,4 +1,4 @@
-const sequelize = require("sequelize");
+const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
 class ProductRepository {
@@ -12,7 +12,7 @@ class ProductRepository {
       offset: offset,
       limit: limit,
       order: [['updatedAt', 'ASC']],
-  });
+    });
 
     return products;
   };
@@ -51,6 +51,39 @@ class ProductRepository {
     });
 
     return products;
+  };
+
+  createProduct = async (
+    productName,
+    productExp,
+    price,
+    productPhoto,
+    quantity,
+    userCount
+  ) => {
+    const createProductData = await this.productModel.create({
+      productName,
+      productExp,
+      price,
+      productPhoto,
+      quantity,
+      userCount,
+    });
+
+    return createProductData;
+  };
+
+  findProductById = async(productId) => {
+    const product = await this.productModel.findByPk(productId);
+    return product;
+  }
+
+  deleteProduct = async (productId) => {
+    const deleteProductData = await this.productModel.destroy({
+      where: { productId },
+    });
+
+    return deleteProductData;
   };
 }
 

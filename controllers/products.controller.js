@@ -34,6 +34,42 @@ class ProductsController {
       });
     }
   };
+
+  // adminCreateProduct = async (req, res, next) => {
+  //   const { productName, productExp, price, quantity, userCount } = req.body;
+  //   const createProductData = await this.productService.createProduct(
+  //     productName,
+  //     productExp,
+  //     price,
+  //     quantity,
+  //     userCount
+  //   );
+
+  //   res.status(201).json({ data: createProductData });
+  // };
+
+  adminCreateProduct = async (req, res, next) => {
+    console.log(req.body)
+    const { productName, productExp, price, quantity } = req.body;
+    const productPhoto = './uploads/' + req.file.filename;
+    const createProductData = await this.productService.createProduct(
+      productName,
+      productExp,
+      price,
+      productPhoto,
+      quantity,
+      0
+    );
+    res.redirect('/admin-products');
+    // res.status(201).json({ data: createProductData });
+  };
+
+  adminDeleteProduct = async (req, res, next) => {
+    const { productId } = req.params;
+    const deleteProduct = await this.productService.deleteProduct(productId);
+
+    res.status(200).json({ data: deleteProduct });
+  };
 }
 
 module.exports = ProductsController;
