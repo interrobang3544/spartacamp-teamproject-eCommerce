@@ -6,6 +6,8 @@ class BasketRepository {
     this.basketModel = BasketModel;
   }
 
+  //* 장바구니 목록 가져오기
+  //- 해당 유저의 바구니 데이터를 모두 가져온다.
   findBasket = async (userId) => {
     const baskets = await this.basketModel.findAll({
       where: {
@@ -13,8 +15,8 @@ class BasketRepository {
       },
     });
     const basketsData = baskets.map((basket) => {
-      const { basketId, userId, productId, quantity } = basket.dataValues;
-      return { basketId, userId, productId, quantity };
+      const { createdAt, updatedAt, ...necessaryData } = basket.dataValues;
+      return necessaryData;
     });
     return basketsData;
   };
