@@ -7,6 +7,6 @@ const UsersController = require('../controllers/users.controller');
 const usersController = new UsersController();
 
 router.get('/', authMiddleware, usersController.getUserData);
-// router.put('/', authMiddleware, usersController.changeUserData);
+router.put('/', authMiddleware, usersController.changeUserData);
 
 module.exports = router;

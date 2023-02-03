@@ -42,6 +42,24 @@ class UserRepository {
     }
   };
 
+  changeUserData = async (userId, hashed, nickname, email, address) => {
+    try {
+      const newUserData = await this.userModel.update(
+        {
+          password: hashed,
+          nickname: nickname,
+          email: email,
+          address: address,
+        },
+        { where: { userId } }
+      );
+      return newUserData;
+    } catch (error) {
+      error.status = 500;
+      throw error;
+    }
+  };
+
   adminFindAllUsers = async (limit, offset) => {
     const users = await this.userModel.findAndCountAll({
       raw: true,

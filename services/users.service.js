@@ -59,9 +59,7 @@ class UserService {
   getUserDataById = async (userId) => {
     try {
       const userData = await this.userRepository.getUserDataById(userId);
-      // console.log('userData', userData);
       const orderData = await this.orderRepository.getOrderDataById(userId);
-      // console.log('orderData', orderData);
 
       if (userData.length < 1) {
         const error = new Error({ messaeg: '회원정보가 없습니다.' });
@@ -98,6 +96,22 @@ class UserService {
       );
 
       return { user, order };
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  changeUserData = async (userId, hashed, nickname, email, address) => {
+    try {
+      const changeUserData = await this.userRepository.changeUserData(
+        userId,
+        hashed,
+        nickname,
+        email,
+        address
+      );
+
+      return changeUserData;
     } catch (error) {
       throw error;
     }
