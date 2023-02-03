@@ -9,51 +9,63 @@ class UserService {
   orderRepository = new OrderRepository(Order);
 
   findById = async (id) => {
-    const userById = await this.userRepository.findById(id);
+    try {
+      const userById = await this.userRepository.findById(id);
 
-    return userById.map((user) => {
-      return {
-        userId: user.userId,
-        id: user.id,
-        password: user.password,
-        nickname: user.nickname,
-        email: user.email,
-        address: user.address,
-      };
-    });
+      return userById.map((user) => {
+        return {
+          userId: user.userId,
+          id: user.id,
+          password: user.password,
+          nickname: user.nickname,
+          email: user.email,
+          address: user.address,
+        };
+      });
+    } catch (error) {
+      throw error;
+    }
   };
 
   findByNickname = async (nickname) => {
-    const userByNIckname = await this.userRepository.findByNickname(nickname);
+    try {
+      const userByNIckname = await this.userRepository.findByNickname(nickname);
 
-    // 얘는 다 불러와 줄 필요는 없음
-    return userByNIckname.map((user) => {
-      return {
-        id: user.id,
-        password: user.password,
-        nickname: user.nickname,
-        email: user.email,
-        address: user.address,
-      };
-    });
+      // 얘는 다 불러와 줄 필요는 없음
+      return userByNIckname.map((user) => {
+        return {
+          id: user.id,
+          password: user.password,
+          nickname: user.nickname,
+          email: user.email,
+          address: user.address,
+        };
+      });
+    } catch (error) {
+      throw error;
+    }
   };
 
   createUser = async (id, hashed, nickname, email, address) => {
-    const createUserData = await this.userRepository.createUser(
-      id,
-      hashed,
-      nickname,
-      email,
-      address
-    );
+    try {
+      const createUserData = await this.userRepository.createUser(
+        id,
+        hashed,
+        nickname,
+        email,
+        address
+      );
 
-    return {
-      id: createUserData.id,
-      password: createUserData.password,
-      nickname: createUserData.nickname,
-      email: createUserData.email,
-      address: createUserData.address,
-    };
+      return {
+        id: createUserData.id,
+        password: createUserData.password,
+        nickname: createUserData.nickname,
+        email: createUserData.email,
+        address: createUserData.address,
+      };
+    } catch (error) {
+      throw error;
+    }
   };
 
   getUserDataById = async (userId) => {
