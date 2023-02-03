@@ -5,7 +5,7 @@ const basketRouter = require('./routes/baskets.routes');
 const app = express();
 
 //* 포트 번호
-const PORT = 6000;
+const PORT = 7000;
 
 //* 뷰 엔진 설정
 app.set('view engine', 'ejs');
@@ -21,5 +21,5 @@ app.use('/baskets', basketRouter);
 
 //* 서버 리슨
 app.listen(PORT, () => {
-  console.log(`✅ 서버가 연결되었습니다. ${PORT}`);
+  console.log(`✅ 서버가 연결되었습니다. http://localhost:${PORT}`);
 });
