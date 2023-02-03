@@ -45,7 +45,7 @@ function getProducts(page) {
         </div>
         <div class="product">
           <button type="button" class="btn btn-primary btn-modify">수정</button>
-          <button type="button" class="btn btn-primary btn-delete" onclick="deleteProduct(${data[i].productId})">삭제</button>
+          <button type="button" class="btn btn-primary btn-delete" onclick="deleteProduct(${data[i].productId}, '${data[i].productPhoto}')">삭제</button>
         </div>
         `;
         productList.append(temp);
@@ -78,9 +78,13 @@ function applyProduct() {
     });
 }
 
-function deleteProduct(productId) {
+function deleteProduct(productId, productPhoto) {
   axios
-    .delete(`admin/products/${productId}`)
+    .delete(`admin/products/${productId}`, {
+      data: {
+        productPhoto,
+      },
+    })
     .then((response) => {
       console.log(response);
       window.location.replace(`/admin-products`);

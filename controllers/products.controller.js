@@ -1,4 +1,5 @@
 const ProductService = require('../services/products.service');
+const fs = require('fs');
 
 class ProductsController {
   productService = new ProductService();
@@ -36,7 +37,6 @@ class ProductsController {
   };
 
   adminCreateProduct = async (req, res, next) => {
-    console.log(req.body)
     const { productName, productExp, price, quantity } = req.body;
     const productPhoto = './uploads/' + req.file.filename;
     const createProductData = await this.productService.createProduct(
@@ -53,7 +53,14 @@ class ProductsController {
 
   adminDeleteProduct = async (req, res, next) => {
     const { productId } = req.params;
+    const { productPhoto } = req.body;
     const deleteProduct = await this.productService.deleteProduct(productId);
+    
+    try {
+      fs.unlinkSync('./static' + productPhoto.substr(1));
+    } catch (error) {
+      console.log(error);
+    }
 
     res.status(200).json({ data: deleteProduct });
   };
