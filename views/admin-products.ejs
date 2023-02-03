@@ -35,7 +35,7 @@
         <button
           type="button"
           class="btn btn-primary btn-apply"
-          onclick="customAlert('상품 등록')"
+          onclick="customModal()"
         >
           상품 등록
         </button>
@@ -51,9 +51,9 @@
     <!-- 상품 등록 모달창 -->
     <div
       class="modal fade"
-      id="alertModal"
+      id="productCreateModal"
       tabindex="-1"
-      aria-labelledby="alertModalLabel"
+      aria-labelledby="productCreateModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
@@ -105,7 +105,7 @@
                 id="product-explanation"
               />
 
-              <label for="product-price" class="col-form-label">가격</label>
+              <label for="product-price" class="col-form-label">상품 가격</label>
               <input
                 type="text"
                 name="price"
@@ -113,7 +113,7 @@
                 id="product-price"
               />
 
-              <label for="product-quantity" class="col-form-label">수량</label>
+              <label for="product-quantity" class="col-form-label">상품 수량</label>
               <input
                 type="text"
                 name="quantity"
@@ -123,6 +123,96 @@
 
               <button type="submit" class="btn btn-primary btn-confirm">
                 등록
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 상품 수정 모달창 -->
+    <div
+      class="modal fade"
+      id="productModifyModal"
+      tabindex="-1"
+      aria-labelledby="productModifyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">상품 정보 수정</h5>
+            <button
+              type="button"
+              class="btn-close btn-confirm"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              method="post"
+              action="/admin/products"
+              enctype="multipart/form-data"
+            >
+              <label for="modify-product-photo" class="col-form-label"
+                >상품 이미지</label
+              >
+              <div class="img-box">
+                <div id="modify-image-show">
+                  <img id="modify-image"/>
+                </div>
+                <input
+                  type="file"
+                  name="product-img"
+                  id="modify-product-photo"
+                  onchange="loadFile2(this)"
+                />
+              </div>
+              <label for="modify-product-name" class="col-form-label">상품명</label>
+              <input
+                type="text"
+                name="productName"
+                class="form-control"
+                id="modify-product-name"
+              />
+
+              <label for="modify-product-explanation" class="col-form-label"
+                >상품 설명</label
+              >
+              <input
+                type="text"
+                name="productExp"
+                class="form-control"
+                id="modify-product-explanation"
+              />
+
+              <label for="modify-product-price" class="col-form-label">상품 가격</label>
+              <input
+                type="text"
+                name="price"
+                class="form-control"
+                id="modify-product-price"
+              />
+
+              <label for="modify-product-quantity" class="col-form-label">상품 수량</label>
+              <input
+                type="text"
+                name="quantity"
+                class="form-control"
+                id="modify-product-quantity"
+              />
+
+              <label for="modify-product-participant" class="col-form-label">참여자 수</label>
+              <input
+                type="text"
+                name="userCount"
+                class="form-control"
+                id="modify-product-participant"
+              />
+
+              <button type="submit" class="btn btn-primary btn-confirm">
+                수정
               </button>
             </form>
           </div>

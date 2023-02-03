@@ -36,6 +36,10 @@ function getProducts(page) {
           <div>${data[i].productExp}</div>
         </div>
         <div class="product product-quantity">
+          <h4>상품 가격</h4>
+          <div>${data[i].price}</div>
+        </div>
+        <div class="product product-quantity">
           <h4>상품 수량</h4>
           <div>${data[i].quantity}</div>
         </div>
@@ -44,7 +48,7 @@ function getProducts(page) {
           <div>${data[i].userCount}</div>
         </div>
         <div class="product">
-          <button type="button" class="btn btn-primary btn-modify">수정</button>
+          <button type="button" class="btn btn-primary btn-modify" onclick="customModal2('${data[i].productPhoto}','${data[i].productName}', '${data[i].productExp}', ${data[i].price}, ${data[i].quantity}, ${data[i].userCount})">수정</button>
           <button type="button" class="btn btn-primary btn-delete" onclick="deleteProduct(${data[i].productId}, '${data[i].productPhoto}')">삭제</button>
         </div>
         `;
@@ -94,19 +98,43 @@ function deleteProduct(productId, productPhoto) {
     });
 }
 
-// 모달창
-const myModal = new bootstrap.Modal('#alertModal');
-function customAlert(text, confirmCallback) {
-  myModal.show();
-  if (confirmCallback) {
-    $('#alertModal .btn-confirm').click(confirmCallback);
-  }
+// 상품 등록 모달창
+const productCreateModal = new bootstrap.Modal('#productCreateModal');
+function customModal() {
+  productCreateModal.show();
 }
 
-// 모달창 이미지
+// 상품 수정 모달창
+const productModifyModal = new bootstrap.Modal('#productModifyModal');
+function customModal2(productPhoto, productName, productExp, price, quantity, userCount) {
+  let oldImage = document.getElementById('modify-image')
+  oldImage.src = productPhoto
+  oldImage.style.width = '100%';
+  oldImage.style.height = '100%';
+  oldImage.style.objectFit = 'contain';
+  document.getElementById('modify-product-name').value = productName
+  document.getElementById('modify-product-explanation').value = productExp
+  document.getElementById('modify-product-price').value = price
+  document.getElementById('modify-product-quantity').value = quantity
+  document.getElementById('modify-product-participant').value = userCount
+  productModifyModal.show();
+}
+
+// 상품 등록 모달창 이미지
 function loadFile(input) {
   let file = input.files[0];
   let newImage = document.getElementById('image');
+  newImage.src = URL.createObjectURL(file);
+
+  newImage.style.width = '100%';
+  newImage.style.height = '100%';
+  newImage.style.objectFit = 'contain';
+}
+
+// 상품 수정 모달창 이미지
+function loadFile2(input) {
+  let file = input.files[0];
+  let newImage = document.getElementById('modify-image');
   newImage.src = URL.createObjectURL(file);
 
   newImage.style.width = '100%';
