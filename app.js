@@ -17,7 +17,11 @@ app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);
 
 app.get('/login', (req, res) => {
-  res.render('login');
+  res.render('indexLogin', { join: false });
+});
+
+app.get('/join', (req, res) => {
+  res.render('indexLogin', { join: true });
 });
 
 app.get('/admin-users', (req, res) => {
