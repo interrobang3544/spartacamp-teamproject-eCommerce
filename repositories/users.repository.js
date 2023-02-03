@@ -7,35 +7,68 @@ class UserRepository {
   }
 
   findById = async (id) => {
-    const userById = await this.userModel.findAll({
-      where: { id },
-    });
-    return userById;
+    try {
+      const userById = await this.userModel.findAll({
+        where: { id },
+      });
+      return userById;
+    } catch (error) {
+      error.status = 500;
+      throw error;
+    }
   };
 
   findByNickname = async (nickname) => {
-    const userByNickname = await this.userModel.findAll({
-      where: { nickname },
-    });
-    return userByNickname;
+    try {
+      const userByNickname = await this.userModel.findAll({
+        where: { nickname },
+      });
+      return userByNickname;
+    } catch (error) {
+      error.status = 500;
+      throw error;
+    }
   };
 
   createUser = async (id, hashed, nickname, email, address) => {
-    const userData = await this.userModel.create({
-      id,
-      password: hashed,
-      nickname,
-      email,
-      address,
-    });
+    try {
+      const userData = await this.userModel.create({
+        id,
+        password: hashed,
+        nickname,
+        email,
+        address,
+      });
 
-    return userData;
+      return userData;
+    } catch (error) {
+      error.status = 500;
+      throw error;
+    }
   };
 
-  getUserDataById = async (id) => {
+  getUserDataById = async (userId) => {
     try {
-      const userData = await this.userModel.findAll({ where: { id: id } });
+      const userData = await this.userModel.findAll({ where: { userId } });
       return userData;
+    } catch (error) {
+      error.status = 500;
+      throw error;
+    }
+  };
+
+  changeUserData = async (userId, hashed, nickname, email, address) => {
+    try {
+      const newUserData = await this.userModel.update(
+        {
+          password: hashed,
+          nickname: nickname,
+          email: email,
+          address: address,
+        },
+        { where: { userId } }
+      );
+      return newUserData;
     } catch (error) {
       error.status = 500;
       throw error;
