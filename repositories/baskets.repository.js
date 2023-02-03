@@ -14,6 +14,9 @@ class BasketRepository {
         userId,
       },
     });
+    if (baskets.length === 0) {
+      return '장바구니가 비어있습니다.';
+    }
     const basketsData = baskets.map((basket) => {
       const { createdAt, updatedAt, ...necessaryData } = basket.dataValues;
       return necessaryData;
