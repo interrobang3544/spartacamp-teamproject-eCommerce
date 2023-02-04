@@ -8,8 +8,9 @@ function changePassword() {
   }
 
   $.ajax({
-    type: 'POST',
+    type: 'PUT',
     url: '/users/changePassword',
+    async: false,
     data: {
       curPassword: curPassword,
       newPassword: newPassword,

@@ -8,6 +8,19 @@ class UserService {
   productRepository = new ProductRepository(Product);
   orderRepository = new OrderRepository(Order);
 
+  changePassword = async (userId, hashed) => {
+    try {
+      const changePassword = await this.userRepository.changePassword(
+        userId,
+        hashed
+      );
+
+      return changePassword;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   findById = async (id) => {
     try {
       const userById = await this.userRepository.findById(id);
