@@ -22,7 +22,7 @@
         <div class="nav-links">
           <ul>
             <li><a href="./admin-users">회원 관리</a></li>
-            <li><a href="./admin-products">상품 관리</a></li>
+            <li><a href="./admin-users">상품 관리</a></li>
             <li class="logout-btn"><a href="#">로그아웃</a></li>
           </ul>
         </div>
@@ -40,6 +40,67 @@
     <nav aria-label="Page navigation example">
       <ul id="page-num" class="pagination justify-content-center"></ul>
     </nav>
+
+    <!-- 회원 수정 모달창 -->
+    <div
+      class="modal fade"
+      id="userModifyModal"
+      tabindex="-1"
+      aria-labelledby="userModifyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">상품 정보 수정</h5>
+            <button
+              type="button"
+              class="btn-close btn-confirm"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="modifyuserId" id="modify-userId" />
+
+            <label for="modify-user-id" class="col-form-label">아이디</label>
+            <input
+              type="text"
+              name="modifyuserName"
+              class="form-control"
+              id="modify-user-id"
+            />
+
+            <label for="modify-user-nickname" class="col-form-label"
+              >닉네임</label
+            >
+            <input
+              type="text"
+              name="modifyuserExp"
+              class="form-control"
+              id="modify-user-nickname"
+            />
+
+            <label for="modify-user-email" class="col-form-label">이메일</label>
+            <input
+              type="text"
+              name="modifyPrice"
+              class="form-control"
+              id="modify-user-email"
+            />
+
+            <label for="modify-user-address" class="col-form-label">주소</label>
+            <input
+              type="text"
+              name="modifyQuantity"
+              class="form-control"
+              id="modify-user-address"
+            />
+            <div id="btn-box"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- bootstrap -->
     <script

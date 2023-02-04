@@ -1,7 +1,6 @@
-console.log('load');
 getProducts(1);
 
-// 사장님 리뷰 조회
+// 전체 상품 조회
 function getProducts(page) {
   axios
     .get(`/admin/products`, { params: { page } })
@@ -81,35 +80,6 @@ function applyProduct() {
       console.log(error);
     });
 }
-
-// function updateProduct(productId) {
-//   const productPhoto = document.getElementById('modify-product-name').value;
-//   const productName = document.getElementById('modify-product-name').value;
-//   const productExp = document.getElementById(
-//     'modify-product-explanation'
-//   ).value;
-//   const price = document.getElementById('modify-product-price').value;
-//   const quantity = document.getElementById('modify-product-quantity').value;
-//   const userCount = document.getElementById('modify-product-participant').value;
-
-//   axios
-//     .patch(`admin/products/${productId}`, {
-//       data: {
-//         productName,
-//         productExp,
-//         price,
-//         quantity,
-//         userCount
-//       },
-//     })
-//     .then((response) => {
-//       console.log(response);
-//       window.location.replace(`/admin-products`);
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// }
 
 function deleteProduct(productId, productPhoto) {
   axios

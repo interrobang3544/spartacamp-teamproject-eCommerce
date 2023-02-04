@@ -17,7 +17,7 @@ class ProductsController {
         data: productsInfo.rows,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(400).json({
         errorMessage: '회원 정보 조회에 실패하였습니다.',
       });
@@ -53,7 +53,7 @@ class ProductsController {
   };
 
   adminUpdateProduct = async (req, res, next) => {
-    console.log(req.body, req.file)
+    console.log(req.body, req.file);
     const {
       modifyProductId,
       modifyProductName,
@@ -64,7 +64,7 @@ class ProductsController {
       modifyUserCount,
     } = req.body;
 
-    let newProductPhoto = modifyProductPhoto
+    let newProductPhoto = modifyProductPhoto;
 
     if (req.file) {
       try {
@@ -74,7 +74,6 @@ class ProductsController {
       }
       newProductPhoto = './uploads/' + req.file.filename;
     }
-    
 
     const updateProduct = await this.productService.updateProduct(
       modifyProductId,
@@ -83,7 +82,7 @@ class ProductsController {
       modifyPrice,
       newProductPhoto,
       modifyQuantity,
-      modifyUserCount,
+      modifyUserCount
     );
 
     res.redirect('/admin-products');
