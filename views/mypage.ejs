@@ -59,14 +59,12 @@
   </head>
 
   <body>
-    <div class="header">
-      <button type="button" class="btn btn-link" onclick="logout()">
-        로그아웃
-      </button>
-    </div>
+    <!-- header -->
+    <%- include('mypageHeader.ejs') %>
+
     <div class="text-center">
       <div class="user-box">
-        <h3>개인정보</h3>
+        <h3>회원 정보</h3>
         <div id="userData"></div>
       </div>
       <div class="order-box">

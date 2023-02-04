@@ -32,6 +32,10 @@ app.get('/mypage/changeUserData', (req, res) => {
   res.render('changeMypage');
 });
 
+app.get('/mypage/changePassword', (req, res) => {
+  res.render('changePassword');
+});
+
 app.get('/admin-users', (req, res) => {
   res.render('admin-users');
 });

@@ -108,6 +108,7 @@ class UserService {
 
       const order = await Promise.all(
         orderData.map(async (data) => {
+          const orderQuantity = data.quantity;
           const orderCreateAt = data.createdAt;
           const productData = await this.productRepository.getProductDataById(
             data.productId
@@ -118,6 +119,7 @@ class UserService {
               productExp: data.productExp,
               price: data.price,
               productPhoto: data.productPhoto,
+              orderQuantity: orderQuantity,
               orderCreateAt: orderCreateAt,
               userCount: data.userCount,
             };
