@@ -74,9 +74,8 @@ class UsersController {
   };
 
   adminGetAllUsers = async (req, res, next) => {
-    console.log(req.query.page);
     try {
-      let limit = 3;
+      let limit = 5;
       let offset = 0 + (req.query.page - 1) * limit;
       const usersInfo = await this.userService.adminFindAllUsers(limit, offset);
       // console.log(usersInfo)
@@ -103,6 +102,27 @@ class UsersController {
         errorMessage: '회원 정보 조회에 실패하였습니다.',
       });
     }
+  };
+
+  adminUpdateUser = async (req, res, next) => {
+    const { userId } = req.params
+    const { id, nickname, email, address } = req.body;
+    const updateUser = await this.userService.updateUser(
+      userId,
+      id,
+      nickname,
+      email,
+      address
+    );
+
+    res.status(200).json({ data: updateUser });
+  };
+
+  adminDeleteUser = async (req, res, next) => {
+    const { userId } = req.params;
+    const deleteUser = await this.userService.deleteUser(userId);
+
+    res.status(200).json({ data: deleteUser });
   };
 }
 

@@ -2,15 +2,20 @@ const ProductRepository = require('../repositories/products.repository');
 const { Product } = require('../models');
 
 class ProductService {
-  ProductRepository = new ProductRepository(Product);
+  productRepository = new ProductRepository(Product);
 
   adminFindAllProducts = async (limit, offset) => {
-    const products = await this.ProductRepository.adminFindAllProducts(limit, offset);
-    return products
+    const products = await this.productRepository.adminFindAllProducts(
+      limit,
+      offset
+    );
+    return products;
   };
 
   adminFindProductsBySearchWord = async (searchWord) => {
-    const products = await this.ProductRepository.adminFindProductsBySearchWord(searchWord);
+    const products = await this.productRepository.adminFindProductsBySearchWord(
+      searchWord
+    );
     return products.map((product) => {
       return {
         productId: product.productId,
@@ -25,14 +30,21 @@ class ProductService {
     });
   };
 
-  createProduct = async (productName, productExp, price, productPhoto, quantity, userCount) => {
-    const createProductData = await this.ProductRepository.createProduct(
+  createProduct = async (
+    productName,
+    productExp,
+    price,
+    productPhoto,
+    quantity,
+    userCount
+  ) => {
+    const createProductData = await this.productRepository.createProduct(
       productName,
       productExp,
       price,
       productPhoto,
       quantity,
-      userCount,
+      userCount
     );
 
     return {
@@ -47,11 +59,50 @@ class ProductService {
     };
   };
 
-  deleteProduct = async (productId) => {
-    const findProduct = await this.ProductRepository.findProductById(productId);
+  updateProduct = async (
+    productId,
+    productName,
+    productExp,
+    price,
+    productPhoto,
+    quantity,
+    userCount
+  ) => {
+    const findProduct = await this.productRepository.findProductById(productId);
     if (!findProduct) throw new Error("Review doesn't exist");
 
-    await this.ProductRepository.deleteProduct(productId);
+    await this.productRepository.updateProduct(
+      productId,
+      productName,
+      productExp,
+      price,
+      productPhoto,
+      quantity,
+      userCount
+    );
+
+    const updateProduct = await this.productRepository.findProductById(
+      productId
+    );
+
+    return {
+      productId: updateProduct.productId,
+      productName: updateProduct.productName,
+      productExp: updateProduct.productExp,
+      price: updateProduct.price,
+      productPhoto: updateProduct.productPhoto,
+      quantity: updateProduct.quantity,
+      userCount: updateProduct.userCount,
+      createdAt: updateProduct.createdAt,
+      updatedAt: updateProduct.updatedAt,
+    };
+  };
+
+  deleteProduct = async (productId) => {
+    const findProduct = await this.productRepository.findProductById(productId);
+    if (!findProduct) throw new Error("Review doesn't exist");
+
+    await this.productRepository.deleteProduct(productId);
 
     return {
       productId: findProduct.productId,

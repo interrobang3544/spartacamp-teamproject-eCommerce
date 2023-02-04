@@ -12,6 +12,8 @@ router.get(
   '/users/search/:searchword',
   usersController.adminGetUsersBySearchWord
 );
+router.patch('/users/:userId', usersController.adminUpdateUser)
+router.delete('/users/:userId', usersController.adminDeleteUser);
 
 router.post(
   '/products',
@@ -23,6 +25,11 @@ router.get(
   '/products/search/:searchword',
   productsController.adminGetProductsBySearchWord
 );
+router.post(
+  '/products/modify',
+  upload.single('modify-product-img'),
+  productsController.adminUpdateProduct
+); // patch여야 하는데 form태그에서 action으로 줄 수 없음
 router.delete('/products/:productId', productsController.adminDeleteProduct);
 
 module.exports = router;
