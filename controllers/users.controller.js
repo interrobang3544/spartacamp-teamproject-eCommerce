@@ -6,7 +6,7 @@ class UsersController {
   adminGetAllUsers = async (req, res, next) => {
     // console.log(req.query.page);
     try {
-      let limit = 3;
+      let limit = 5;
       let offset = 0 + (req.query.page - 1) * limit;
       const usersInfo = await this.userService.adminFindAllUsers(limit, offset);
       // console.log(usersInfo)

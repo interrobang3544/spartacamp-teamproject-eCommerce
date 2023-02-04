@@ -11,7 +11,7 @@ class UserRepository {
       raw: true,
       offset: offset,
       limit: limit,
-      order: [['updatedAt', 'ASC']],
+      order: [['createdAt', 'DESC']],
     });
     // console.log(users)
     return users;

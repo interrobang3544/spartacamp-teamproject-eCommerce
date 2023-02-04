@@ -36,7 +36,7 @@ function getUsers(page) {
         const temp = document.createElement('tr');
         temp.setAttribute('class', 'user-data');
         temp.innerHTML = `
-          <td>${(page - 1) * 3 + i + 1}</td>
+          <td>${(page - 1) * 5 + i + 1}</td>
           <td>${data[i].id}</td>
           <td>${data[i].nickname}</td>
           <td>${data[i].email}</td>
