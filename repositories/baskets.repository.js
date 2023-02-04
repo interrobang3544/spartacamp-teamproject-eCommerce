@@ -14,6 +14,8 @@ class BasketRepository {
         userId,
       },
     });
+
+    //* 장바구니 비었을 때 예외처리
     if (baskets.length === 0) {
       return '장바구니가 비어있습니다.';
     }
