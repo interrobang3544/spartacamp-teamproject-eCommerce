@@ -9,6 +9,14 @@ class BasketController {
     const basketData = await this.basketSevice.getBaskets(userId);
     return res.send(JSON.stringify(basketData));
   };
+
+  patchBasketQuantity = async (req, res) => {
+    const { id } = req.params;
+    const { quantity } = req.body;
+
+    const msg = await this.basketSevice.patchBasketQuantity(id, quantity);
+    return res.send(msg);
+  };
 }
 
 module.exports = BasketController;

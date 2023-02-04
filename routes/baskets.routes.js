@@ -5,6 +5,6 @@ const router = express.Router();
 const basketController = new BasketController();
 
 router.route('/').get(basketController.getBaskets).post();
-router.route('/:id').patch().delete();
+router.route('/:id').patch(basketController.patchBasketQuantity).delete();
 
 module.exports = router;
