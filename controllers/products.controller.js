@@ -101,6 +101,12 @@ class ProductsController {
 
     res.status(200).json({ data: deleteProduct });
   };
+  
+  getProducts = async (req, res, next) => {
+    const products = await this.productService.findAllProduct();
+
+    res.status(200).json({ data: products })
+  }
 }
 
 module.exports = ProductsController;

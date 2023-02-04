@@ -121,6 +121,12 @@ class ProductRepository {
 
     return deleteProductData;
   };
+
+  findAllProduct = async () => {
+    const products = await Products.findAll();
+
+    return products;
+  }
 }
 
 module.exports = ProductRepository;

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <link href="../static/styles/home.css" rel="stylesheet" type="text/css" /> -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        get_products();
+      });
+      function get_products() {
+        $.ajax({
+          type: "GET",
+          url: "/products",
+          data: {},
+          success: function (response) {
+            // let doc = JSON.parse(response);
+            console.log(response);
+            for (let e of response.data) {
+              let title = e.productName;
+              let content = e.productExp;
+              let questionNum = e.price;
+              let temp_html = `<div>${questionNum}, ${title}, ${content}</div>`;
+              $(".question__list").append(temp_html);
+            };
+            // for (let i = 0; i < response.length; i++) {
+            //   let title = response[i].productName;
+            //   let content = response[i].productExp;
+            //   let questionNum = response[i].price;
+            //   let temp_html = `<div>${questionNum}, ${title}, ${content}</div>`;
+            //   $(".question__list").append(temp_html);
+            //   console.log(temp_html)
+            // }
+          },
+        });
+      }
+    </script>
+
+    <title>공구해조</title>
+  </head>
+  <body>
+    <div class="ddd">왜애</div>
+    <button class="mybtn">확인</button>
+    <div class="question__list">
+      <p>뭔데?</p>
+    </div>
+  </body>
+  <!-- <script type="text/javascript" src="../static/scripts/home.js"></script> -->
+</html>
