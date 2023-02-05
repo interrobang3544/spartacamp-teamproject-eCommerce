@@ -94,7 +94,7 @@ function logout() {
       window.location.href = '/login';
     },
     error: function (response) {
-      console.log(response.responseJSON.message);
+      customAlert(response.responseJSON.message);
     },
   });
 }

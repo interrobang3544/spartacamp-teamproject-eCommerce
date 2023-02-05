@@ -99,7 +99,6 @@ class UsersController {
         message: '회원 정보 수정이 완료되었습니다.',
       });
     } catch (error) {
-      console.log(error);
       return res
         .status(400)
         .json({ errorMessage: '회원 정보 수정에 실패하였습니다.' });
