@@ -12,7 +12,7 @@ app.use(express.static('static'));
 
 //* 뷰 엔진 설정
 app.set('view engine', 'ejs');
-app.set('views', '/views');
+app.set('views', 'views');
 
 //* body 데이터를 해석하기 위해 전역 미들웨어 설정
 app.use(express.json()); //- JSON 형태의 데이터 해석

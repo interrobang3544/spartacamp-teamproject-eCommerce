@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./images/shortcut_icon.ico"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <title>공구해조 | 장바구니</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-header__nav">
+        <div class="site-header__nav__home">
+          <a href="/">공구해조</a>
+        </div>
+        <div class="site-header__nav__columns">
+          <a href="/baskets">장바구니</a>
+          <a href="">마이페이지</a>
+          <a href="">Log Out</a>
+        </div>
+      </nav>
+    </header>
+    <main class="basket-screen">
+      <h1 class="basket-screen__title">장바구니</h1>
+      <% if(Array.isArray(basketList)){%>
+      <div class="order-box">
+        <span>전체 주문 금액 <small> <%=totalOrderPrice %> </small>원 </span>
+        <button id="order-btn">주문하기</button>
+      </div>
+      <ul class="product-list basket-screen__list">
+        <% basketList.forEach((basket)=>{%>
+        <li class="product-list__item">
+          <input type="checkbox" name="basket-check" id="basekt-check" />
+          <img src="<%= basket.productPhoto %>" />
+          <span><%= basket.productName %></span>
+          <div class="product-list__item__right-box">
+            <div class="right-box__text">
+              <span
+                >수량
+                <input
+                  type="number"
+                  name="input-basket-quantity"
+                  id="input-basket-quantity"
+                  min="0"
+                  max="999"
+                  value="<%= basket.basketQuantity %>"
+                />
+                개</span
+              >
+              <span><%= basket.totalPrice %> 원</span>
+            </div>
+            <div>
+              <button
+                id="basket-edit-btn"
+                data-basket-id="<%= basket.basketId%>"
+                type="button"
+              >
+                수정
+              </button>
+              <button
+                id="basket-delete-btn"
+                data-basket-id="<%= basket.basketId%>"
+                type="button"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </li>
+        <% })%>
+      </ul>
+      <% }else{%>
+      <div class="order-box">
+        <span>전체 주문 금액<small> 0 </small> 원</span>
+        <button id="order-btn">주문하기</button>
+      </div>
+      <ul class="product-list basket-screen__list"></ul>
+      <%} %>
+      <div class="pagenation">page</div>
+    </main>
+  </body>
+  <script src="./scripts/basket.js"></script>
+</html>

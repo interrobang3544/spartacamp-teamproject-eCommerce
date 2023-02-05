@@ -7,13 +7,13 @@ class BasketController {
   getBaskets = async (req, res) => {
     const userId = 1;
     const basketData = await this.basketSevice.getBaskets(userId);
-    return res.status(200).send(JSON.stringify(basketData));
+    const { basketList, totalOrderPrice } = basketData;
+    return res.status(200).render('basket', { basketList, totalOrderPrice });
   };
 
   //* 해당 장바구니 수량 수정
   patchBasketQuantity = async (req, res) => {
-    const { id } = req.params;
-    const { quantity } = req.body;
+    const { id, quantity } = req.body;
 
     const msg = await this.basketSevice.patchBasketQuantity(id, quantity);
     return res.status(200).send(msg);
@@ -25,6 +25,14 @@ class BasketController {
     const msg = await this.basketSevice.deleteBasket(id);
     return res.status(200).send(msg);
   };
+
+  /* //! 미완성
+  //* 장바구니 주문
+  orderBasket = async (req, res) => {
+    console.log('주문이 완료되었습니다.');
+    return res.end();
+  };
+  */
 }
 
 module.exports = BasketController;

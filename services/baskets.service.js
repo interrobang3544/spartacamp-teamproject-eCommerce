@@ -10,6 +10,7 @@ class BasketSevice {
   //- 가져온 바구니의 정보를 토대로 상품 정보도 결합해서 반환
   getBaskets = async (userId) => {
     const baskets = await this.basketRepository.findBasketOfUser(userId);
+    let totalOrderPrice = 0;
 
     //+ 장바구니가 비어있지 않으면
     if (Array.isArray(baskets)) {
@@ -21,18 +22,27 @@ class BasketSevice {
             productId
           );
           const { productName, price, productPhoto } = product;
+          totalOrderPrice += price * quantity;
           return {
             basketId,
             productName,
-            price,
+            //+ toLocaleString 을 이용한 3자리마다 콤마 찍기
+            totalPrice: (price * quantity).toLocaleString('ko-KR'),
             productPhoto,
             basketQuantity: quantity,
           };
         })
       );
-      return basketList;
+
+      //+ 정규식을 이용한 3자리마다 콤마 찍기
+      totalOrderPrice = String(totalOrderPrice).replace(
+        /(\d)(?=(?:\d{3})+(?!\d))/g,
+        '$1,'
+      );
+
+      return { basketList, totalOrderPrice };
     }
-    return baskets;
+    return { basketList: null, totalOrderPrice };
   };
 
   //* 해당 장바구니 수량 수정

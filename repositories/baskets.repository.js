@@ -17,7 +17,7 @@ class BasketRepository {
 
     //+ 장바구니 목록이 비었을 때 예외처리
     if (baskets.length === 0) {
-      return '장바구니가 비어있습니다.';
+      return;
     }
 
     //+ 장바구니 목록 전체를 순회하면서 필요한 데이터만 반환
