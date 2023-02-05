@@ -36,7 +36,7 @@ basketList.forEach((basketItem) => {
 
   basketEditBtn.addEventListener('click', () => {
     //+ 갯수 제한 유효성 알림
-    if (basketInput.value > 999) {
+    if (basketInput.value > 999 || basketInput.value < 1) {
       basketInput.reportValidity();
       return;
     }
