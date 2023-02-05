@@ -1,12 +1,8 @@
 const orderBtn = document.getElementById('order-btn');
-const basketQuantityinputs = document.querySelectorAll(
-  '#input-basket-quantity'
-);
-const basketEditBtns = document.querySelectorAll('#basket-edit-btn');
-const basketDeleteBtns = document.querySelectorAll('#basket-delete-btn');
+const basketList = document.querySelectorAll('.product-list__item');
 
 //* 장바구니 해당 상품 수량 수정
-const handleBasketEditBtn = async (basketId, input) => {
+const handleBasketEditBtn = async (basketId, quantity) => {
   const response = await fetch(`/baskets/${basketId}`, {
     method: 'PATCH',
     headers: {
@@ -14,7 +10,7 @@ const handleBasketEditBtn = async (basketId, input) => {
     },
     body: JSON.stringify({
       id: basketId,
-      quantity: input.value,
+      quantity,
     }),
   });
   if (response.status === 200) {
@@ -32,14 +28,25 @@ const handleBasketDeleteBtn = async (basketId) => {
   }
 };
 
-basketEditBtns.forEach((btn, idx) => {
-  btn.addEventListener('click', () => {
-    return handleBasketEditBtn(btn.dataset.basketId, basketQuantityinputs[idx]);
-  });
-});
+//* li 마다 이벤트 추가
+basketList.forEach((basketItem) => {
+  const basketInput = basketItem.querySelector('#input-basket-quantity');
+  const basketEditBtn = basketItem.querySelector('#basket-edit-btn');
+  const basketDeleteBtn = basketItem.querySelector('#basket-delete-btn');
 
-basketDeleteBtns.forEach((btn) => {
-  btn.addEventListener('click', () =>
-    handleBasketDeleteBtn(btn.dataset.basketId)
-  );
+  basketEditBtn.addEventListener('click', () => {
+    //+ 갯수 제한 유효성 알림
+    if (basketInput.value > 999) {
+      basketInput.reportValidity();
+      return;
+    }
+    return handleBasketEditBtn(
+      basketEditBtn.dataset.basketId,
+      basketInput.value
+    );
+  });
+
+  basketDeleteBtn.addEventListener('click', () => {
+    handleBasketDeleteBtn(basketDeleteBtn.dataset.basketId);
+  });
 });

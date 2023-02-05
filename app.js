@@ -1,5 +1,6 @@
 const express = require('express');
 const basketRouter = require('./routes/baskets.routes');
+const orderRouter = require('./routes/orders.routes');
 
 //* express 할당
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true })); //- x-www-form-urlencoded 형�
 
 //* 라우터 설정
 app.use('/baskets', basketRouter);
+app.use('/orders', orderRouter);
 
 //* 서버 리슨
 app.listen(PORT, () => {
