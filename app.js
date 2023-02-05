@@ -1,5 +1,9 @@
 const express = require('express');
+const socket = require('socket.io');
+const http = require('http');
 const app = express();
+const server = http.createServer(app);
+const io = socket(server);
 const port = 8080;
 
 const loginMiddleware = require('./middlewares/loginCheck');
@@ -17,12 +21,22 @@ app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);
 
+// ejs루트-----------------------------------------------------------------------------------------------
 app.get('/login', (req, res) => {
   res.render('indexLogin', { join: false });
 });
 
 app.get('/join', (req, res) => {
   res.render('indexLogin', { join: true });
+});
+
+app.get('/chattingOnline', loginMiddleware, (req, res) => {
+  // 로그인이 된 상태면 마이페이지로, 안됐다면 로그인페이지로
+  if (res.locals.user) {
+    res.render('chatting');
+  } else {
+    res.render('indexLogin', { join: false });
+  }
 });
 
 app.get('/mypage', loginMiddleware, (req, res) => {
@@ -60,6 +74,6 @@ app.get('/admin-products', (req, res) => {
   res.render('admin-products');
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(port, '포트로 서버가 켜졌어요!');
 });
