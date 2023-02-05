@@ -1,28 +1,19 @@
-* {
-  margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-.text-align {
+.text-center {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.login-box {
+.user-box {
   width: 30%;
   border: 1px solid;
 }
 
-.join-box {
+.order-box {
   width: 30%;
   border: 1px solid;
-}
-
-.add-box {
-  margin-top: 10px;
+  margin-top: 2%;
 }
 
 .form-margin {
@@ -30,9 +21,13 @@
 }
 
 .form-margin-top {
-  margin-top: 20px;
+  margin-top: 2%;
 }
 
 .margin-bottom {
   margin-bottom: 20px;
+}
+
+.margin-left {
+  margin-left: 20px;
 }

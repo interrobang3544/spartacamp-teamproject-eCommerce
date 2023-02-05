@@ -53,22 +53,30 @@
     ></script>
 
     <!-- css -->
-    <link rel="stylesheet" href="/./styles/login.css" />
+    <link rel="stylesheet" href="/./styles/mypage.css" />
     <link rel="stylesheet" href="/./styles/loginHeader.css" />
     <link rel="stylesheet" href="/./styles/loginModal.css" />
-    <title>공구해조</title>
+    <title>공구해조 | 마이페이지</title>
   </head>
 
-  <body class="text-center">
+  <body>
     <!-- header -->
-    <%- include('loginHeader.ejs') %>
-    <!-- body -->
-    <% if(join) { %> <%- include('join.ejs') %> <% }else{ %> <%-
-    include('login.ejs') %> <% } %>
+    <%- include('mypageHeader.ejs') %>
+
+    <div class="text-center form-margin-top">
+      <div class="user-box">
+        <h3>회원정보</h3>
+        <div id="userData"></div>
+      </div>
+      <div class="order-box">
+        <h3>주문목록</h3>
+        <div id="orderData"></div>
+      </div>
+    </div>
+
     <!-- modal -->
     <%- include('loginModal.ejs') %>
 
-    <script src="./scripts/login.js"></script>
-    <script src="./scripts/join.js"></script>
+    <script src="./scripts/mypage.js"></script>
   </body>
 </html>

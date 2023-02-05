@@ -95,7 +95,6 @@ class ApiController {
 
       return res.status(200).json({ message: '로그인 성공.' });
     } catch (error) {
-      console.log(error);
       return res.status(400).json({ errorMessage: '로그인 실패.' });
     }
   };
