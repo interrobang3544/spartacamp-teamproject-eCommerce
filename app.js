@@ -78,9 +78,7 @@ app.get('/admin-products', (req, res) => {
 //socket--------------------------------------------------------------------------------
 io.on('connection', function (socket) {
   // 새로운 유저가 접속하였을때
-  console.log('누가 접속하였습니다.');
   socket.on('newUser', function (nickname, done) {
-    console.log(nickname, '님이 접속하였습니다.');
     // 소켓에 닉네임 저장
     socket.name = nickname;
     // showRoom()
@@ -97,13 +95,11 @@ io.on('connection', function (socket) {
   socket.on('message', function (data) {
     // 누가 전송한 것인지
     data.name = socket.name;
-    console.log(data);
     // 나머지 사람들에게 메시지 전송
     io.emit('update', data);
   });
 
   socket.on('disconnect', function () {
-    console.log(socket.name, '님이 나가셨습니다.');
     //나머지 사람들에게 메시지 전송
     io.emit('update', {
       type: 'disconnect',

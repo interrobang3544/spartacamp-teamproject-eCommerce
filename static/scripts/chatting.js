@@ -45,7 +45,6 @@ nicknameInput.addEventListener('submit', handleNicknameSubmit);
 function handleNicknameSubmit(event) {
   event.preventDefault();
   const input = document.getElementById('nickname').value;
-  console.log(input);
   socket.emit('newUser', input, showRoom);
 }
 
@@ -69,7 +68,6 @@ function send(event) {
 }
 
 socket.on('update', function (data) {
-  console.log(`${data['name']} : ${data['message']}`);
   const chat = document.getElementById('chat');
 
   const message = document.createElement('div');
@@ -77,7 +75,6 @@ socket.on('update', function (data) {
   let className = '';
 
   // 타입에 따라 적용할 클래스를 다르게 지정
-  console.log(data['type']);
   switch (data['type']) {
     case 'message':
       className = 'other';
