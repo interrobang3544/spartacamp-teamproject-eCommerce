@@ -14,6 +14,7 @@
 .site-header__nav button {
   color: white;
   font-weight: 700;
+  margin: 0 0 5px 0;
 }
 .site-header__nav__columns a {
   margin-left: 10px;

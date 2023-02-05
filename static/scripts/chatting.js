@@ -9,18 +9,21 @@ $(document).ready(function () {
 
       tempHtml += `
       <label for="nickname">Nickname</label>
-      <input
+      <div class = "display-flex">
+        <input
         type="nickname"
         class="form-control"
         id="nickname"
         value="${response.data.user[0]['nickname']}"
       />
       <button
-        class="btn btn-lg btn-info"
+        class="btn btn-lg btn-info float-right"
         type="submit"
       >
         저장
       </button>
+      </div>
+      
       `;
 
       $('#nicknameInput').append(tempHtml);
