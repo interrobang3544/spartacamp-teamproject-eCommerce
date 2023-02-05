@@ -4,10 +4,22 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <title>공구해조 | 실시간 채팅</title>
     <link rel="stylesheet" href="/./styles/chatting.css" />
   </head>
   <body>
-    <div id="main">반갑습니다</div>
+    <div id="main">
+      <form id="nicknameInput"></form>
+      <div id="chat">
+        <!-- 채팅 메시지 영역 -->
+      </div>
+      <form id="messageInput">
+        <input type="text" id="test" />
+        <button type="submit">전송</button>
+      </form>
+    </div>
   </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./scripts/chatting.js"></script>
 </html>

@@ -1,0 +1,98 @@
+$(document).ready(function () {
+  $.ajax({
+    type: 'GET',
+    url: '/users/',
+    async: false,
+    success: function (response) {
+      document.getElementById('nicknameInput').innerHTML = '';
+      let tempHtml = ``;
+
+      tempHtml += `
+      <label for="nickname">Nickname</label>
+      <input
+        type="nickname"
+        class="form-control"
+        id="nickname"
+        value="${response.data.user[0]['nickname']}"
+      />
+      <button
+        class="btn btn-lg btn-info"
+        type="submit"
+      >
+        저장
+      </button>
+      `;
+
+      $('#nicknameInput').append(tempHtml);
+    },
+    error: function (response) {
+      customAlert(response.responseJSON.errorMessage);
+    },
+  });
+});
+
+//* socket-------------------------------------------------------------
+const socket = io();
+const room = document.getElementById('messageInput');
+
+// 닉네임을 치기전에는 입력창 숨기기
+room.hidden = true;
+
+// 닉네임제출 이벤트발생
+const nicknameInput = document.getElementById('nicknameInput');
+nicknameInput.addEventListener('submit', handleNicknameSubmit);
+
+function handleNicknameSubmit(event) {
+  event.preventDefault();
+  const input = document.getElementById('nickname').value;
+  console.log(input);
+  socket.emit('newUser', input, showRoom);
+}
+
+function showRoom() {
+  nicknameInput.hidden = true;
+  room.hidden = false;
+
+  // 메시지 전송이벤트 발생
+  room.addEventListener('submit', send);
+}
+
+function send(event) {
+  event.preventDefault();
+  // 입력된 데이터 가져오기
+  const input = document.getElementById('test');
+  const message = input.value;
+  // 입력칸은 다시 빈칸으로 변경
+  document.getElementById('test').value = '';
+  // 서버로 데이터와 함께 send 이벤트 전달
+  socket.emit('message', { type: 'message', message: message });
+}
+
+socket.on('update', function (data) {
+  console.log(`${data['name']} : ${data['message']}`);
+  const chat = document.getElementById('chat');
+
+  const message = document.createElement('div');
+  const node = document.createTextNode(`${data['name']}: ${data['message']}`);
+  let className = '';
+
+  // 타입에 따라 적용할 클래스를 다르게 지정
+  console.log(data['type']);
+  switch (data['type']) {
+    case 'message':
+      className = 'other';
+      break;
+
+    case 'connect':
+      className = 'connect';
+      break;
+
+    case 'disconnect':
+      className = 'disconnect';
+      break;
+  }
+
+  message.classList.add(className);
+  message.appendChild(node);
+  chat.appendChild(message);
+});

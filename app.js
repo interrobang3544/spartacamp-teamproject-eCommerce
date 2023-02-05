@@ -10,6 +10,7 @@ const loginMiddleware = require('./middlewares/loginCheck');
 const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
+const { disconnect } = require('process');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -72,6 +73,44 @@ app.get('/admin-users', (req, res) => {
 
 app.get('/admin-products', (req, res) => {
   res.render('admin-products');
+});
+
+//socket--------------------------------------------------------------------------------
+io.on('connection', function (socket) {
+  // 새로운 유저가 접속하였을때
+  console.log('누가 접속하였습니다.');
+  socket.on('newUser', function (nickname, done) {
+    console.log(nickname, '님이 접속하였습니다.');
+    // 소켓에 닉네임 저장
+    socket.name = nickname;
+    // showRoom()
+    done();
+    // 모든 소켓에 전송
+    io.emit('update', {
+      type: 'connect',
+      name: 'SERVER',
+      message: nickname + '님이 접속하였습니다.',
+    });
+  });
+
+  // 전송한 메시지 받기
+  socket.on('message', function (data) {
+    // 누가 전송한 것인지
+    data.name = socket.name;
+    console.log(data);
+    // 나머지 사람들에게 메시지 전송
+    io.emit('update', data);
+  });
+
+  socket.on('disconnect', function () {
+    console.log(socket.name, '님이 나가셨습니다.');
+    //나머지 사람들에게 메시지 전송
+    io.emit('update', {
+      type: 'disconnect',
+      name: 'SERVER',
+      message: socket.name + '님이 나가셨습니다.',
+    });
+  });
 });
 
 server.listen(port, () => {
