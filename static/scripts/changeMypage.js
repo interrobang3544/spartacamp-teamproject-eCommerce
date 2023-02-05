@@ -35,6 +35,13 @@ $(document).ready(function () {
       <button
       class="btn btn-lg btn-info margin-bottom"
       type="button"
+      onclick="location.href='/mypage'"
+    >
+      뒤로
+    </button>
+      <button
+      class="btn btn-lg btn-info margin-bottom margin-left"
+      type="button"
       onclick="changeUserData()">
       저장
     </button>

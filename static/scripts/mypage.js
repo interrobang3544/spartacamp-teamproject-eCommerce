@@ -29,7 +29,7 @@ $(document).ready(function () {
         비밀번호 변경
         </button>
         <button
-        class="btn btn-lg btn-info margin-bottom"
+        class="btn btn-lg btn-info margin-bottom margin-left"
         type="button"
         onclick="location.href='/mypage/changeUserData'">
         회원정보 변경
