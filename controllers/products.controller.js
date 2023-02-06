@@ -19,7 +19,7 @@ class ProductsController {
     } catch (error) {
       console.log(error);
       return res.status(400).json({
-        errorMessage: '회원 정보 조회에 실패하였습니다.',
+        errorMessage: '상품 정보 조회에 실패하였습니다.',
       });
     }
   };
@@ -32,24 +32,37 @@ class ProductsController {
       return res.status(200).json({ data: productsInfo });
     } catch (error) {
       return res.status(400).json({
-        errorMessage: '회원 정보 조회에 실패하였습니다.',
+        errorMessage: '상품 정보 조회에 실패하였습니다.',
       });
     }
   };
 
   adminCreateProduct = async (req, res, next) => {
-    const { productName, productExp, price, quantity } = req.body;
-    const productPhoto = './uploads/' + req.file.filename;
-    const createProductData = await this.productService.createProduct(
-      productName,
-      productExp,
-      price,
-      productPhoto,
-      quantity,
-      0
-    );
-    res.redirect('/admin-products');
-    // res.status(201).json({ data: createProductData });
+    try {
+      const { productName, productExp, price, quantity } = req.body;
+      
+      if (!req.file.filename) {
+        res.status(412).send({
+          errorMessage: '상품 이미지를 등록해주세요.',
+        });
+        return;
+      }
+
+      const productPhoto = './uploads/' + req.file.filename;
+      const createProductData = await this.productService.createProduct(
+        productName,
+        productExp,
+        price,
+        productPhoto,
+        quantity,
+        0
+      );
+      res.redirect('/admin-products');
+    } catch (error) {
+      return res.status(400).json({
+        errorMessage: '상품 등록에 실패하였습니다.',
+      });
+    }
   };
 
   adminUpdateProduct = async (req, res, next) => {
@@ -101,12 +114,12 @@ class ProductsController {
 
     res.status(200).json({ data: deleteProduct });
   };
-  
+
   getProducts = async (req, res, next) => {
     const products = await this.productService.findAllProduct();
 
-    res.status(200).json({ data: products })
-  }
+    res.status(200).json({ data: products });
+  };
 }
 
 module.exports = ProductsController;
