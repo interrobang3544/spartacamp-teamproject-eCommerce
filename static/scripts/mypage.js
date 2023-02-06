@@ -64,8 +64,12 @@ $(document).ready(function () {
               <div>${order[0]['price']}</div>
             </div>
             <div class="product product-quantity">
-              <h4>공구 참여자수</h4>
+              <h4>주문 수량</h4>
               <div>${order[0]['orderQuantity']}</div>
+            </div>
+            <div class="product product-quantity">
+              <h4>공구 참여자수</h4>
+              <div>${order[0]['userCount']}</div>
             </div>
           </div>
           `;

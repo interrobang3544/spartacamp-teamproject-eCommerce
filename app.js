@@ -1,11 +1,16 @@
 const express = require('express');
+const socket = require('socket.io');
+const http = require('http');
 const app = express();
+const server = http.createServer(app);
+const io = socket(server);
 const port = 8080;
 
 const loginMiddleware = require('./middlewares/loginCheck');
 const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
+const { disconnect } = require('process');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -17,12 +22,22 @@ app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);
 
+// ejs루트-----------------------------------------------------------------------------------------------
 app.get('/login', (req, res) => {
   res.render('indexLogin', { join: false });
 });
 
 app.get('/join', (req, res) => {
   res.render('indexLogin', { join: true });
+});
+
+app.get('/chattingOnline', loginMiddleware, (req, res) => {
+  // 로그인이 된 상태면 마이페이지로, 안됐다면 로그인페이지로
+  if (res.locals.user) {
+    res.render('chatting');
+  } else {
+    res.render('indexLogin', { join: false });
+  }
 });
 
 app.get('/mypage', loginMiddleware, (req, res) => {
@@ -60,6 +75,79 @@ app.get('/admin-products', (req, res) => {
   res.render('admin-products');
 });
 
-app.listen(port, () => {
+//socket--------------------------------------------------------------------------------
+// public room
+function publicRooms() {
+  const sids = io.sockets.adapter.sids;
+  const rooms = io.sockets.adapter.rooms;
+  const publicRooms = [];
+  rooms.forEach((_, key) => {
+    if (sids.get(key) === undefined) {
+      publicRooms.push(key);
+    }
+  });
+  return publicRooms;
+}
+
+io.on('connection', function (socket) {
+  // 새로운 유저가 접속하였을때
+  let roomName;
+  socket.on('newUser', function (nickname, done) {
+    // 소켓에 닉네임 저장
+    socket.name = nickname;
+    // 닉네임과 동일한 이름의 방추가
+    roomName = nickname;
+    socket.join(nickname);
+    // showRoom()
+    done();
+    // 소켓에 전송
+    io.sockets.in(roomName).emit('update', {
+      type: 'connect',
+      name: 'SERVER',
+      message: nickname + `님이 ${roomName}방에 접속하였습니다.`,
+    });
+    // 방목록 변경
+    io.sockets.emit('room_change', publicRooms());
+  });
+
+  // 전송한 메시지 받기
+  socket.on('message', function (data) {
+    // 누가 전송한 것인지
+    data.name = socket.name;
+    // 나머지 사람들에게 메시지 전송
+    io.sockets.in(roomName).emit('update', data);
+  });
+
+  socket.on('disconnect', function () {
+    // 같은 소켓의 상대방에게 메시지 전송
+    io.sockets.in(roomName).emit('update', {
+      type: 'disconnect',
+      name: 'SERVER',
+      message: socket.name + '님이 나가셨습니다.',
+    });
+    // 방목록 변경
+    io.sockets.emit('room_change', publicRooms());
+  });
+
+  // 관리자가 채팅방에 들어갈때
+  socket.on('enter_room', function (input, done) {
+    // 이전 소켓떠나기
+    socket.leave(roomName);
+    // 새 소켓 지정
+    roomName = input;
+    socket.join(roomName);
+    done();
+    // 소켓에 전송
+    io.sockets.in(roomName).emit('update', {
+      type: 'connect',
+      name: 'SERVER',
+      message: socket.name + `님이 ${roomName}방에 접속하였습니다.`,
+    });
+    // 방목록 변경
+    io.sockets.emit('room_change', publicRooms());
+  });
+});
+
+server.listen(port, () => {
   console.log(port, '포트로 서버가 켜졌어요!');
 });
