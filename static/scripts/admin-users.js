@@ -42,6 +42,12 @@ function getUsers(page) {
 
       for (let i = 0; i < data.length; i++) {
         const temp = document.createElement('tr');
+        let type = '일반'
+        if (data[i].type === 1) {
+          type = 'VIP'
+        } else if (data[i].type === 2) {
+          type = '관리자'
+        }
         temp.setAttribute('class', 'user-data');
         temp.innerHTML = `
           <td>${(page - 1) * 5 + i + 1}</td>
@@ -50,7 +56,7 @@ function getUsers(page) {
           <td>${data[i].email}</td>
           <td>${data[i].address}</td>
           <td>${data[i].createdAt.split('.')[0].split('T').join(' ')}</td>
-          <td></td>
+          <td>${type}</td>
           <td></td>
           <td><button type="button" class="btn btn-primary" onclick="customModal(${data[i].userId}, '${data[i].id}', '${data[i].nickname}', '${data[i].email}', '${
           data[i].address}', '${data[i].type}')">수정</button></td>
