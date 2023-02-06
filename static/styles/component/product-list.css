@@ -1,7 +1,7 @@
 .product-list {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  overflow-y: auto;
 }
 
 .product-list li {

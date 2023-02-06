@@ -27,15 +27,15 @@
     </header>
     <main class="basket-screen">
       <h1 class="basket-screen__title">장바구니</h1>
-      <% if(Array.isArray(basketList)){%>
       <div class="order-box">
-        <span>전체 주문 금액 <small> <%=totalOrderPrice %> </small>원 </span>
+        <!-- <span>전체 주문 금액 <small id="totalOrderPrice"> <%=totalOrderPrice %> </small>원 </span> -->
+        <span>전체 주문 금액 <small id="totalOrderPrice">0</small>원 </span>
         <button id="order-btn">주문하기</button>
       </div>
       <ul class="product-list basket-screen__list">
-        <% basketList.forEach((basket)=>{%>
-        <li class="product-list__item">
-          <input type="checkbox" name="basket-check" id="basekt-check" />
+        <% if(Array.isArray(basketList)){%> <% basketList.forEach((basket)=>{%>
+        <li class="product-list__item" data-basket-id="<%= basket.basketId%>">
+          <input type="checkbox" name="basket-check" id="basket-check" />
           <img src="<%= basket.productPhoto %>" />
           <span><%= basket.productName %></span>
           <div class="product-list__item__right-box">
@@ -53,36 +53,26 @@
                 />
                 개</span
               >
-              <span><%= basket.totalPrice %> 원</span>
+              <span>
+                <small id="totalPrice"> <%= basket.totalPrice %> </small>
+                원</span
+              >
             </div>
             <div>
-              <button
-                id="basket-edit-btn"
-                data-basket-id="<%= basket.basketId%>"
-                type="button"
-              >
-                수정
-              </button>
-              <button
-                id="basket-delete-btn"
-                data-basket-id="<%= basket.basketId%>"
-                type="button"
-              >
-                삭제
-              </button>
+              <button id="basket-edit-btn" type="button">수정</button>
+              <button id="basket-delete-btn" type="button">삭제</button>
             </div>
           </div>
         </li>
         <% })%>
       </ul>
       <% }else{%>
-      <div class="order-box">
+      <!-- <div class="order-box">
         <span>전체 주문 금액<small> 0 </small> 원</span>
         <button id="order-btn">주문하기</button>
-      </div>
-      <ul class="product-list basket-screen__list"></ul>
+      </div> -->
+      <!-- <ul class="product-list basket-screen__list"></ul> -->
       <%} %>
-      <div class="pagenation">page</div>
     </main>
   </body>
   <script src="./scripts/basket.js"></script>

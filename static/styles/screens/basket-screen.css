@@ -1,7 +1,11 @@
 .basket-screen {
   height: 100%;
   display: grid;
-  grid-template-rows: 70px 70px auto 40px;
+  grid-template-rows: 70px 70px auto;
+}
+
+.basket-screen__list {
+  height: 700px;
 }
 
 .basket-screen__title {
@@ -17,7 +21,7 @@
   margin: 0 20px;
 }
 
-.order-box small {
+.basket-screen small {
   font-weight: bold;
   font-size: 15px;
 }
@@ -29,9 +33,4 @@
   border: none;
   border-radius: 5px;
   height: 40px;
-}
-
-.pagenation {
-  text-align: center;
-  padding: 10px;
 }

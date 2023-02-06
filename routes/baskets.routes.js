@@ -9,6 +9,6 @@ router
   .route('/:id')
   .patch(basketController.patchBasketQuantity)
   .delete(basketController.deleteBasket);
-// router.post('/baskets/order', basketController.orderBasket);
+router.post('/order', basketController.orderBasket);
 
 module.exports = router;

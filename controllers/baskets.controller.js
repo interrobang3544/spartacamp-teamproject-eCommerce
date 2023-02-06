@@ -26,13 +26,13 @@ class BasketController {
     return res.status(200).send(msg);
   };
 
-  /* //! 미완성
   //* 장바구니 주문
   orderBasket = async (req, res) => {
-    console.log('주문이 완료되었습니다.');
-    return res.end();
+    const { orderList } = req.body;
+    req.session.orderList = orderList;
+    console.log(req.session.orderList);
+    return res.sendStatus(201);
   };
-  */
 }
 
 module.exports = BasketController;
