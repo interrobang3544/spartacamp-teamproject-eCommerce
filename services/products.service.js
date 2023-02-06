@@ -116,7 +116,6 @@ class ProductService {
       updatedAt: findProduct.updatedAt,
     };
   };
-
   
   findAllProduct = async () => {
     const allProduct = await this.productRepository.findAllProduct();
