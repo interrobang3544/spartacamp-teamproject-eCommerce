@@ -132,29 +132,34 @@ socket.on('update', function (data) {
 });
 
 socket.on('room_change', (rooms) => {
-  const roomList = room.querySelector('ul');
+  const roomList = room.querySelector('select');
   roomList.innerHTML = '';
   if (rooms.length === 0) {
     return;
   }
+
+  const list = document.createElement('option');
+  list.innerText = '실시간 상담 문의자';
+  list.selected = true;
+  roomList.append(list);
+
   rooms.forEach((room) => {
     if (room !== '관리자') {
-      const li = document.createElement('li');
-      li.innerText = room;
-      roomList.append(li);
+      const list = document.createElement('option');
+      list.innerText = room;
+      list.value = room;
+      roomList.append(list);
     }
   });
 });
 
 // 관리자가 입장할 채팅방입력
-roomInput.addEventListener('submit', handleRoomSubmit);
+roomInput.addEventListener('change', handleRoomSubmit);
 
 function handleRoomSubmit(event) {
   event.preventDefault();
-  const input = roomInput.querySelector('input');
-  let room = input.value;
+  let input = roomInput.value;
   //socket.send와 같은 역할
-  socket.emit('enter_room', room, showRoom);
-  roomName = room;
-  input.value = '';
+  socket.emit('enter_room', input, showRoom);
+  roomName = input;
 }
