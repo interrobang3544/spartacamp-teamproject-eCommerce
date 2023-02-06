@@ -87,7 +87,7 @@ function showRoom() {
     roomInput.hidden = false;
     // 방 이름 보여주기
     const h3 = room.querySelector('h3');
-    h3.innerText = `접속한 방 :  ${roomName}`;
+    h3.innerText = `상담 중 :  ${roomName}`;
   }
 
   // 메시지 전송이벤트 발생

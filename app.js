@@ -114,8 +114,8 @@ io.on('connection', function (socket) {
   socket.on('message', function (data) {
     // 누가 전송한 것인지
     data.name = socket.name;
-    /* 보낸 사람을 제외한 나머지 유저에게 메시지 전송 */
-    socket.broadcast.emit('update', data);
+    // 같은 소켓의 나머지 사람에게 메시지 전송
+    socket.broadcast.in(roomName).emit('update', data);
   });
 
   socket.on('disconnect', function () {
