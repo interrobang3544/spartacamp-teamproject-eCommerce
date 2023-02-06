@@ -34,6 +34,25 @@ $(document).ready(function () {
   });
 });
 
+function customAlert(text) {
+  $('#alertText').text(text);
+  $('#alertModal').modal('show');
+}
+
+function logout() {
+  $.ajax({
+    type: 'GET',
+    url: '/api/auth/logout',
+    success: function (response) {
+      customAlert(response.message);
+      window.location.href = '/login';
+    },
+    error: function (response) {
+      customAlert(response.responseJSON.message);
+    },
+  });
+}
+
 //* socket-------------------------------------------------------------
 const socket = io();
 const room = document.getElementById('messageInput');
