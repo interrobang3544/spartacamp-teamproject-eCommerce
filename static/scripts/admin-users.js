@@ -25,7 +25,7 @@ function getUsers(page) {
         <th scope="col">이메일</td>
         <th scope="col">주소</td>
         <th scope="col">가입일시</td>
-        <th scope="col">회원 등급</td>
+        <th scope="col">회원 분류</td>
         <th scope="col">블랙리스트</td>
         <th scope="col">수정</td>
         <th scope="col">삭제</td>
@@ -42,11 +42,15 @@ function getUsers(page) {
 
       for (let i = 0; i < data.length; i++) {
         const temp = document.createElement('tr');
-        let type = '일반'
+        let type = '일반';
         if (data[i].type === 1) {
-          type = 'VIP'
+          type = 'VIP';
         } else if (data[i].type === 2) {
-          type = '관리자'
+          type = '관리자';
+        }
+        let blackList = '-';
+        if (data[i].blackList === 1) {
+          blackList = '⭕';
         }
         temp.setAttribute('class', 'user-data');
         temp.innerHTML = `
@@ -57,9 +61,12 @@ function getUsers(page) {
           <td>${data[i].address}</td>
           <td>${data[i].createdAt.split('.')[0].split('T').join(' ')}</td>
           <td>${type}</td>
-          <td></td>
-          <td><button type="button" class="btn btn-primary" onclick="customModal(${data[i].userId}, '${data[i].id}', '${data[i].nickname}', '${data[i].email}', '${
-          data[i].address}', '${data[i].type}')">수정</button></td>
+          <td>${blackList}</td>
+          <td><button type="button" class="btn btn-primary" onclick="customModal(${
+            data[i].userId
+          }, '${data[i].id}', '${data[i].nickname}', '${data[i].email}', '${
+          data[i].address
+        }', ${data[i].type}, ${data[i].blackList})">수정</button></td>
           <td><button type="button" class="btn btn-primary" onclick="deleteUser(${
             data[i].userId
           })">삭제</button></td>
@@ -74,12 +81,17 @@ function getUsers(page) {
 
 // 회원 수정 모달창
 const userModifyModal = new bootstrap.Modal('#userModifyModal');
-function customModal(userId, id, nickname, email, address, type) {
+function customModal(userId, id, nickname, email, address, type, blackList) {
   document.getElementById('modify-user-id').value = id;
   document.getElementById('modify-user-nickname').value = nickname;
   document.getElementById('modify-user-email').value = email;
   document.getElementById('modify-user-address').value = address;
   document.getElementById('modify-user-type').value = type;
+  if (blackList === 1) {
+    document.getElementById('modify-user-blackList').checked = true;
+  } else {
+    document.getElementById('modify-user-blackList').checked = false;
+  }
   userModifyModal.show();
 
   const temp = document.createElement('button');
@@ -97,6 +109,11 @@ function updateUser(userId) {
   const email = document.getElementById('modify-user-email').value;
   const address = document.getElementById('modify-user-address').value;
   const type = document.getElementById('modify-user-type').value;
+  let blackList = 0;
+  if (document.getElementById('modify-user-blackList').checked === true) {
+    blackList = 1;
+  }
+
   axios
     .patch(`admin/users/${userId}`, {
       id: id,
@@ -104,6 +121,7 @@ function updateUser(userId) {
       email: email,
       address: address,
       type: type,
+      blackList: blackList,
     })
     .then((response) => {
       console.log(response);
@@ -130,12 +148,10 @@ function deleteUser(userId) {
 // 계정 확인
 function checkAccount() {
   axios
-    .get(
-      '/api/auth/login/check'
-    )
+    .get('/api/auth/login/check')
     .then((response) => {
       if (response.data.user.type !== 2) {
-        alert('관리자 계정이 아닙니다.')
+        alert('관리자 계정이 아닙니다.');
         window.location.replace(`/`);
       }
     })

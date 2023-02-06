@@ -163,11 +163,11 @@ class UserService {
     return users;
   };
 
-  updateUser = async (userId, id, nickname, email, address, type) => {
+  updateUser = async (userId, id, nickname, email, address, type, blackList) => {
     const findUser = await this.userRepository.findUserById(userId);
     if (!findUser) throw new Error("Review doesn't exist");
 
-    await this.userRepository.updateUser(userId, id, nickname, email, address, type);
+    await this.userRepository.updateUser(userId, id, nickname, email, address, type, blackList);
 
     const updateUser = await this.userRepository.findUserById(userId);
 
@@ -178,6 +178,7 @@ class UserService {
       email: updateUser.email,
       address: updateUser.address,
       type: updateUser.type,
+      blackList: updateUser.blackList,
       createdAt: updateUser.createdAt,
       updatedAt: updateUser.updatedAt,
     };

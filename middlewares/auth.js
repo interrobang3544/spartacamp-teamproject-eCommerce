@@ -3,11 +3,10 @@ const { User } = require('../models');
 
 module.exports = async (req, res, next) => {
   const { cookie } = req.headers;
-  console.log(cookie.split(' ').slice(-1)[0])
   if (!cookie) {
     return res.status(401).json({ message: '로그인 후 이용가능합니다.' });
   }
-  const [authType, authToken] = cookie.split(' ').slice(-1)[0].split('=');
+  const [authType, authToken] = cookie.split('=');
   if (!authToken || authType !== 'accessToken') {
     res.status(401).send({
       message: '로그인 후 이용가능합니다.',

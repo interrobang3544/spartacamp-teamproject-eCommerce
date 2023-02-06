@@ -125,7 +125,7 @@ class UserRepository {
     return user;
   };
 
-  updateUser = async (userId, id, nickname, email, address, type) => {
+  updateUser = async (userId, id, nickname, email, address, type, blackList) => {
     const updateUserData = await this.userModel.update(
       {
         id,
@@ -133,6 +133,7 @@ class UserRepository {
         email,
         address,
         type,
+        blackList
       },
       { where: { userId } }
     );

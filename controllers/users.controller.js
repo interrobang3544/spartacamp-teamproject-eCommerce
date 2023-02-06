@@ -106,14 +106,15 @@ class UsersController {
 
   adminUpdateUser = async (req, res, next) => {
     const { userId } = req.params
-    const { id, nickname, email, address, type } = req.body;
+    const { id, nickname, email, address, type, blackList } = req.body;
     const updateUser = await this.userService.updateUser(
       userId,
       id,
       nickname,
       email,
       address,
-      type
+      type,
+      blackList
     );
 
     res.status(200).json({ data: updateUser });
