@@ -99,6 +99,13 @@ function send(event) {
   // 입력된 데이터 가져오기
   const input = document.getElementById('test');
   let message = input.value;
+  // 내가 전송할 메시지 클라이언트에게 표시
+  var chat = document.getElementById('chat');
+  var msg = document.createElement('div');
+  var node = document.createTextNode(message);
+  msg.classList.add('me');
+  msg.appendChild(node);
+  chat.appendChild(msg);
   // 서버로 데이터와 함께 send 이벤트 전달
   socket.emit('message', { type: 'message', message: message });
   // 입력칸은 다시 빈칸으로 변경
