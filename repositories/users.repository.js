@@ -86,8 +86,12 @@ class UserRepository {
     return users;
   };
 
-  adminFindUsersBySearchWord = async (searchWord) => {
-    const users = await this.userModel.findAll({
+  adminFindUsersBySearchWord = async (limit, offset, searchWord) => {
+    const users = await this.userModel.findAndCountAll({
+      raw: true,
+      offset: offset,
+      limit: limit,
+      order: [['createdAt', 'DESC']],
       where: {
         [Op.or]: [
           {

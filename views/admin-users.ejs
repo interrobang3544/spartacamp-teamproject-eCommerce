@@ -41,6 +41,12 @@
       <ul id="page-num" class="pagination justify-content-center"></ul>
     </nav>
 
+    <!-- 검색창 -->
+    <div class="container-fluid">
+        <input class="search" id="search" type="search" placeholder="아이디/닉네임/이메일/주소" aria-label="Search">
+        <button class="btn btn-outline-success" onclick="getUsers(1)">검색</button>
+    </div>
+
     <!-- 회원 수정 모달창 -->
     <div
       class="modal fade"
@@ -96,6 +102,16 @@
               class="form-control"
               id="modify-user-address"
             />
+            <label for="modify-user-class" class="col-form-label">회원 등급</label>
+            <select class="form-select" id="modify-user-class" aria-label="Default select example">
+              <option selected>일반</option>
+              <option value="1">VIP</option>
+              <option value="2">관리자</option>
+            </select>
+            <label for="modify-user-blacked" class="col-form-label">블랙 리스트</label>         
+            <div class="form-check">
+              <input class="form-check-input" id="modify-user-blacked" type="checkbox" value="" id="flexCheckDefault">
+            </div>
             <div id="btn-box"></div>
           </div>
         </div>

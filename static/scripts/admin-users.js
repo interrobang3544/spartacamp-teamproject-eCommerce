@@ -2,8 +2,13 @@ getUsers(1);
 
 // 전체 회원 조회
 function getUsers(page) {
+  let url = `/admin/users`
+  let searchword = document.getElementById('search').value;
+  if (searchword) {
+    url = `/admin/users/search/${searchword}`
+  }
   axios
-    .get(`/admin/users`, { params: { page } })
+    .get(url, { params: { page } })
     .then((response) => {
       let { totalPage } = response.data;
       let { data } = response.data;
@@ -19,6 +24,8 @@ function getUsers(page) {
         <th scope="col">이메일</td>
         <th scope="col">주소</td>
         <th scope="col">가입일시</td>
+        <th scope="col">회원 등급</td>
+        <th scope="col">블랙리스트</td>
         <th scope="col">수정</td>
         <th scope="col">삭제</td>
       </tr>
@@ -42,6 +49,8 @@ function getUsers(page) {
           <td>${data[i].email}</td>
           <td>${data[i].address}</td>
           <td>${data[i].createdAt.split('.')[0].split('T').join(' ')}</td>
+          <td></td>
+          <td></td>
           <td><button type="button" class="btn btn-primary" onclick="customModal(${
             data[i].userId
           }, '${data[i].id}', '${data[i].nickname}', '${data[i].email}', '${

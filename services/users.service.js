@@ -154,22 +154,13 @@ class UserService {
     return users;
   };
 
-  adminFindUsersBySearchWord = async (searchWord) => {
+  adminFindUsersBySearchWord = async (limit, offset, searchWord) => {
     const users = await this.userRepository.adminFindUsersBySearchWord(
+      limit,
+      offset,
       searchWord
     );
-    return users.map((user) => {
-      return {
-        userId: user.userId,
-        id: user.id,
-        password: user.password,
-        nickname: user.nickname,
-        email: user.email,
-        address: user.address,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      };
-    });
+    return users;
   };
 
   updateUser = async (userId, id, nickname, email, address) => {
