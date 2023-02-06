@@ -1,11 +1,12 @@
+checkAccount();
 getUsers(1);
 
 // 전체 회원 조회
 function getUsers(page) {
-  let url = `/admin/users`
+  let url = `/admin/users`;
   let searchword = document.getElementById('search').value;
   if (searchword) {
-    url = `/admin/users/search/${searchword}`
+    url = `/admin/users/search/${searchword}`;
   }
   axios
     .get(url, { params: { page } })
@@ -51,11 +52,8 @@ function getUsers(page) {
           <td>${data[i].createdAt.split('.')[0].split('T').join(' ')}</td>
           <td></td>
           <td></td>
-          <td><button type="button" class="btn btn-primary" onclick="customModal(${
-            data[i].userId
-          }, '${data[i].id}', '${data[i].nickname}', '${data[i].email}', '${
-          data[i].address
-        }')">수정</button></td>
+          <td><button type="button" class="btn btn-primary" onclick="customModal(${data[i].userId}, '${data[i].id}', '${data[i].nickname}', '${data[i].email}', '${
+          data[i].address}', '${data[i].type}')">수정</button></td>
           <td><button type="button" class="btn btn-primary" onclick="deleteUser(${
             data[i].userId
           })">삭제</button></td>
@@ -70,11 +68,12 @@ function getUsers(page) {
 
 // 회원 수정 모달창
 const userModifyModal = new bootstrap.Modal('#userModifyModal');
-function customModal(userId, id, nickname, email, address) {
+function customModal(userId, id, nickname, email, address, type) {
   document.getElementById('modify-user-id').value = id;
   document.getElementById('modify-user-nickname').value = nickname;
   document.getElementById('modify-user-email').value = email;
   document.getElementById('modify-user-address').value = address;
+  document.getElementById('modify-user-type').value = type;
   userModifyModal.show();
 
   const temp = document.createElement('button');
@@ -91,13 +90,14 @@ function updateUser(userId) {
   const nickname = document.getElementById('modify-user-nickname').value;
   const email = document.getElementById('modify-user-email').value;
   const address = document.getElementById('modify-user-address').value;
-  console.log(id, nickname, email, address);
+  const type = document.getElementById('modify-user-type').value;
   axios
     .patch(`admin/users/${userId}`, {
       id: id,
       nickname: nickname,
       email: email,
       address: address,
+      type: type,
     })
     .then((response) => {
       console.log(response);
@@ -118,5 +118,22 @@ function deleteUser(userId) {
     })
     .catch((error) => {
       console.log(error);
+    });
+}
+
+// 계정 확인
+function checkAccount() {
+  axios
+    .get(
+      '/api/auth/login/check'
+    )
+    .then((response) => {
+      if (response.data.user.type !== 2) {
+        alert('관리자 계정이 아닙니다.')
+        window.location.replace(`/`);
+      }
+    })
+    .catch((error) => {
+      console.log('err', error);
     });
 }

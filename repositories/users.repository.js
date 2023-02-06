@@ -125,13 +125,14 @@ class UserRepository {
     return user;
   };
 
-  updateUser = async (userId, id, nickname, email, address) => {
+  updateUser = async (userId, id, nickname, email, address, type) => {
     const updateUserData = await this.userModel.update(
       {
         id,
         nickname,
         email,
         address,
+        type,
       },
       { where: { userId } }
     );

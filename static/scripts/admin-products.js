@@ -1,3 +1,4 @@
+checkAccount();
 getProducts(1);
 
 // 전체 상품 조회
@@ -144,4 +145,21 @@ function loadFile(input, elementId) {
   newImage.style.width = '100%';
   newImage.style.height = '100%';
   newImage.style.objectFit = 'contain';
+}
+
+// 계정 확인
+function checkAccount() {
+  axios
+    .get(
+      '/api/auth/login/check'
+    )
+    .then((response) => {
+      if (response.data.user.class !== 2) {
+        alert('관리자 계정이 아닙니다.')
+        window.location.replace(`/`);
+      }
+    })
+    .catch((error) => {
+      console.log('err', error);
+    });
 }
