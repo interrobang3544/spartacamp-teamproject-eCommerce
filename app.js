@@ -76,19 +76,38 @@ app.get('/admin-products', (req, res) => {
 });
 
 //socket--------------------------------------------------------------------------------
+// public room
+function publicRooms() {
+  const sids = io.sockets.adapter.sids;
+  const rooms = io.sockets.adapter.rooms;
+  const publicRooms = [];
+  rooms.forEach((_, key) => {
+    if (sids.get(key) === undefined) {
+      publicRooms.push(key);
+    }
+  });
+  return publicRooms;
+}
+
 io.on('connection', function (socket) {
   // 새로운 유저가 접속하였을때
+  let roomName;
   socket.on('newUser', function (nickname, done) {
     // 소켓에 닉네임 저장
     socket.name = nickname;
+    // 닉네임과 동일한 이름의 방추가
+    roomName = nickname;
+    socket.join(nickname);
     // showRoom()
     done();
-    // 모든 소켓에 전송
-    io.emit('update', {
+    // 소켓에 전송
+    io.sockets.in(roomName).emit('update', {
       type: 'connect',
       name: 'SERVER',
-      message: nickname + '님이 접속하였습니다.',
+      message: nickname + `님이 ${roomName}방에 접속하였습니다.`,
     });
+    // 방목록 변경
+    io.sockets.emit('room_change', publicRooms());
   });
 
   // 전송한 메시지 받기
@@ -96,16 +115,36 @@ io.on('connection', function (socket) {
     // 누가 전송한 것인지
     data.name = socket.name;
     // 나머지 사람들에게 메시지 전송
-    io.emit('update', data);
+    io.sockets.in(roomName).emit('update', data);
   });
 
   socket.on('disconnect', function () {
-    //나머지 사람들에게 메시지 전송
-    io.emit('update', {
+    // 같은 소켓의 상대방에게 메시지 전송
+    io.sockets.in(roomName).emit('update', {
       type: 'disconnect',
       name: 'SERVER',
       message: socket.name + '님이 나가셨습니다.',
     });
+    // 방목록 변경
+    io.sockets.emit('room_change', publicRooms());
+  });
+
+  // 관리자가 채팅방에 들어갈때
+  socket.on('enter_room', function (input, done) {
+    // 이전 소켓떠나기
+    socket.leave(roomName);
+    // 새 소켓 지정
+    roomName = input;
+    socket.join(roomName);
+    done();
+    // 소켓에 전송
+    io.sockets.in(roomName).emit('update', {
+      type: 'connect',
+      name: 'SERVER',
+      message: socket.name + `님이 ${roomName}방에 접속하였습니다.`,
+    });
+    // 방목록 변경
+    io.sockets.emit('room_change', publicRooms());
   });
 });
 
