@@ -2,8 +2,13 @@ getProducts(1);
 
 // 전체 상품 조회
 function getProducts(page) {
+  let url = `/admin/products`
+  let searchword = document.getElementById('search').value;
+  if (searchword) {
+    url = `/admin/products/search/${searchword}`
+  }
   axios
-    .get(`/admin/products`, { params: { page } })
+    .get(url, { params: { page } })
     .then((response) => {
       let { totalPage } = response.data;
       let { data } = response.data;

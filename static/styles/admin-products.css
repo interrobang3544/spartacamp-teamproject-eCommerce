@@ -44,3 +44,14 @@
   margin-top: 10px;
   float: right;
 }
+
+.container-fluid {
+  display: flex;
+  justify-content: center;
+}
+
+.search {
+  width: 400px;
+  margin-left: 48px;
+  margin-right: 10px;
+}

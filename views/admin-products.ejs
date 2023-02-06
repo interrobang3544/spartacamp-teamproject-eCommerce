@@ -48,6 +48,20 @@
       <ul id="page-num" class="pagination justify-content-center"></ul>
     </nav>
 
+    <!-- 검색창 -->
+    <div class="container-fluid">
+      <input
+        class="search"
+        id="search"
+        type="search"
+        placeholder="상품명/설명/가격"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success" onclick="getProducts(1)">
+        검색
+      </button>
+    </div>
+
     <!-- 상품 등록 모달창 -->
     <div
       class="modal fade"
@@ -160,7 +174,11 @@
               enctype="multipart/form-data"
               id="modify-modal-body"
             >
-              <input type="hidden" name="modifyProductId" id="modify-product-id" />
+              <input
+                type="hidden"
+                name="modifyProductId"
+                id="modify-product-id"
+              />
               <input
                 type="hidden"
                 name="modifyProductPhoto"
@@ -171,7 +189,7 @@
               >
               <div class="img-box">
                 <div id="modify-image-show">
-                  <img id="modify-image"/>
+                  <img id="modify-image" />
                 </div>
                 <input
                   type="file"
