@@ -15,12 +15,13 @@ $(document).ready(function () {
         class="form-control"
         id="nickname"
         value="${response.data.user[0]['nickname']}"
+        readonly
       />
       <button
         class="btn btn-lg btn-info float-right"
         type="submit"
       >
-        저장
+        접속
       </button>
       </div>
       

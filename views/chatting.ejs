@@ -26,26 +26,30 @@
     <%- include('mypageHeader.ejs') %>
 
     <div id="main">
-      <div id="room">
-        <h3></h3>
-        <ul></ul>
+      <div>
+        <div id="room">
+          <h3></h3>
+          <ul></ul>
+        </div>
+        <form id="roomInput" class="display-flex">
+          <input type="text" class="form-control" />
+          <button type="submit" class="btn btn-lg btn-info float-right">
+            입장
+          </button>
+        </form>
+        <form id="nicknameInput"></form>
       </div>
-      <form id="roomInput" class="display-flex">
-        <input type="text" class="form-control" />
-        <button type="submit" class="btn btn-lg btn-info float-right">
-          입장
-        </button>
-      </form>
-      <form id="nicknameInput"></form>
       <div id="chat">
         <!-- 채팅 메시지 영역 -->
       </div>
-      <form id="messageInput" class="display-flex">
-        <input type="text" class="form-control" id="test" />
-        <button type="submit" class="btn btn-lg btn-info float-right">
-          전송
-        </button>
-      </form>
+      <div>
+        <form id="messageInput" class="display-flex">
+          <input type="text" class="form-control" id="test" />
+          <button type="submit" class="btn btn-lg btn-info float-right">
+            전송
+          </button>
+        </form>
+      </div>
     </div>
 
     <!-- modal -->
