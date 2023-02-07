@@ -138,6 +138,25 @@ class ProductService {
       }
     });
   }
+
+  findProductSpec = async (productId) => {
+    const findProductSpec = await this.productRepository.getProductDataById(productId);
+    if (!findProductSpec) throw new Error("Review doesn't exist");
+
+    return findProductSpec.map((product) => {
+      return {
+        productId: product.productId,
+        productName: product.productName,
+        productExp: product.productExp,
+        price: product.price,
+        productPhoto: product.productPhoto,
+        quantity: product.quantity,
+        userCount: product.userCount,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt
+      };
+    });
+  };
 }
 
 module.exports = ProductService;
