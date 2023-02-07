@@ -8,7 +8,7 @@ const port = 8080;
 
 // 카카오 소셜로그인
 const passportConfig = require('./passport');
-const axios = require('axios');
+const session = require('express-session');
 passportConfig(app);
 
 const loginMiddleware = require('./middlewares/loginCheck');
@@ -22,6 +22,13 @@ app.set('views', './views');
 app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.KAKAO_SECRET,
+  })
+);
 app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);

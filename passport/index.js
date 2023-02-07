@@ -32,12 +32,14 @@ module.exports = (app) => {
           } else {
             // 가입되지 않는 유저면 회원가입 시키고 로그인을 시킨다
             const newUser = await User.create({
-              email: profile._json.kakao_account_email,
+              email: profile._json.kakao_account.email,
               nickname: `KAKAO${profile.id}`,
               id: `KAKAO${profile.id}`,
-              password: bcrypt.hash(Math.random(), 12),
+              password: await bcrypt.hash('aaaa0000', 12),
               address: 'null',
             });
+            console.log(newUser);
+
             done(null, newUser); // 회원가입하고 로그인 인증 완료
           }
         } catch (error) {
