@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
   try {
     const { userId } = jwt.verify(
       authToken,
-      'my-secrect-key' //secretkey
+      process.env.KAKAO_SECRET //secretkey
     );
 
     User.findByPk(userId).then((user) => {

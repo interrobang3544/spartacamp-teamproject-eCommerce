@@ -16,12 +16,12 @@ const usersRouter = require('./routes/users.routes');
 //* express 할당
 const app = express();
 
+//* 소셜 로그인 설정
+passportConfig(app);
+
 //* 소켓 서버 설정
 const server = http.createServer(app);
 const io = socket(server);
-
-//* 소셜 로그인 설정
-passportConfig(app);
 
 //* 포트 번호
 const PORT = 8080;

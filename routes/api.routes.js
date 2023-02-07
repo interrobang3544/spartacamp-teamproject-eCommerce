@@ -36,7 +36,7 @@ router.get(
         id: req.user.id,
         userNickname: req.user.nickname,
       },
-      'my-secrect-key',
+      process.env.KAKAO_SECRET,
       {
         expiresIn: '1d',
       }

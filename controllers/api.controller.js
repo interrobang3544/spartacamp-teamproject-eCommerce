@@ -85,7 +85,7 @@ class ApiController {
           id: user[0].id,
           userNickname: user[0].nickname,
         },
-        'my-secrect-key', //비밀키
+        process.env.KAKAO_SECRET, //비밀키
         { expiresIn: '1d' }
       );
 
