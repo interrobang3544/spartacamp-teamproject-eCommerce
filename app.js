@@ -191,6 +191,6 @@ io.on('connection', function (socket) {
 // 소켓끝-----------------------------------------------------------
 
 //* 서버 리슨
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`✅ 서버가 연결되었습니다. http://localhost:${PORT}`);
 });
