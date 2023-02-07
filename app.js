@@ -1,34 +1,59 @@
 const express = require('express');
+const session = require('express-session');
+const memoryStore = require('memorystore')(session);
 const socket = require('socket.io');
 const http = require('http');
-const app = express();
-const server = http.createServer(app);
-const io = socket(server);
-const port = 8080;
-
-// 카카오 소셜로그인
 const passportConfig = require('./passport');
-const session = require('express-session');
-passportConfig(app);
+require('dotenv').config();
 
+const basketRouter = require('./routes/baskets.routes');
+const orderRouter = require('./routes/orders.routes');
 const loginMiddleware = require('./middlewares/loginCheck');
 const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
 
-app.set('view engine', 'ejs');
-app.set('views', './views');
+//* express 할당
+const app = express();
 
+//* 소켓 서버 설정
+const server = http.createServer(app);
+const io = socket(server);
+
+//* 소셜 로그인 설정
+passportConfig(app);
+
+//* 포트 번호
+const PORT = 8080;
+
+//* 정적 파일
 app.use(express.static('static'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+//* 뷰 엔진 설정
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
+const maxAge = 1000 * 60 * 10;
+
+//* 세션 전역 설정
 app.use(
   session({
+    secret: process.env.KAKAO_SECRET,
     resave: false,
     saveUninitialized: false,
-    secret: process.env.KAKAO_SECRET,
+    store: new memoryStore({ checkPeriod: maxAge }),
+    cookie: { maxAge },
   })
 );
+
+//* body 데이터를 해석하기 위해 전역 미들웨어 설정
+app.use(express.json()); //- JSON 형태의 데이터 해석
+app.use(express.urlencoded({ extended: true })); //- x-www-form-urlencoded 형태 데이터 해석
+//? extended 속성이 true 면 qs 모듈 필요, false 면 NodeJS 기본 내장 querystring 모듈 사용
+
+//* 라우터 설정
+app.use('/baskets', basketRouter);
+app.use('/orders', orderRouter);
 app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);
@@ -88,7 +113,7 @@ app.get('/admin-products', (req, res) => {
 
 app.get('/', (req, res) => {
   res.render('home');
-})
+});
 
 //socket--------------------------------------------------------------------------------
 // public room
@@ -165,6 +190,7 @@ io.on('connection', function (socket) {
 
 // 소켓끝-----------------------------------------------------------
 
-server.listen(port, () => {
-  console.log(port, '포트로 서버가 켜졌어요!');
+//* 서버 리슨
+app.listen(PORT, () => {
+  console.log(`✅ 서버가 연결되었습니다. http://localhost:${PORT}`);
 });

@@ -1,9 +1,13 @@
-const { Order } = require('../models');
+const sequelize = require('sequelize');
+const Op = sequelize.Op;
 
 class OrderRepository {
+  constructor(OrderModel) {
+    this.orderModel = OrderModel;
+  }
   getOrderDataById = async (userId) => {
     try {
-      const orderData = await Order.findAll({ where: { userId } });
+      const orderData = await this.orderModel.findAll({ where: { userId } });
       return orderData;
     } catch (error) {
       error.status = 500;

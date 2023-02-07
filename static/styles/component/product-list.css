@@ -1,0 +1,31 @@
+.product-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.product-list li {
+  height: 182px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.product-list li img {
+  height: 150px;
+  width: 150px;
+}
+
+#input-basket-quantity {
+  width: 50px;
+  text-align: end;
+}
+
+#input-basket-quantity::-webkit-inner-spin-button,
+#input-basket-quantity::-webkit-outer-spin-button {
+  opacity: 1;
+}
