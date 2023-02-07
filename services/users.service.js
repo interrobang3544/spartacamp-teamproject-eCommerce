@@ -33,6 +33,7 @@ class UserService {
           nickname: user.nickname,
           email: user.email,
           address: user.address,
+          type: user.type,
         };
       });
     } catch (error) {
@@ -177,11 +178,27 @@ class UserService {
     return users;
   };
 
-  updateUser = async (userId, id, nickname, email, address, type, blackList) => {
+  updateUser = async (
+    userId,
+    id,
+    nickname,
+    email,
+    address,
+    type,
+    blackList
+  ) => {
     const findUser = await this.userRepository.findUserById(userId);
     if (!findUser) throw new Error("Review doesn't exist");
 
-    await this.userRepository.updateUser(userId, id, nickname, email, address, type, blackList);
+    await this.userRepository.updateUser(
+      userId,
+      id,
+      nickname,
+      email,
+      address,
+      type,
+      blackList
+    );
 
     const updateUser = await this.userRepository.findUserById(userId);
 

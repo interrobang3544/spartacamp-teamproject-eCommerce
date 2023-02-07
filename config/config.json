@@ -5,7 +5,8 @@
     "database": "ecommerce",
     "host": "express-database.cllbd8oq6oqs.ap-northeast-2.rds.amazonaws.com",
     "dialect": "mysql",
-    "timezone": "+09:00"
+    "timezone": "+09:00",
+    "logging": false
   },
   "test": {
     "username": "root",

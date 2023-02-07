@@ -15,7 +15,11 @@ function login() {
     },
     success: function (response) {
       customAlert(response.message);
-      window.location.replace('/mypage');
+      if (response.data === 2) {
+        window.location.replace('/admin-users');
+      } else {
+        window.location.replace('/mypage');
+      }
     },
     error: function (response) {
       customAlert(response.responseJSON.errorMessage);

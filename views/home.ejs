@@ -219,7 +219,8 @@
   </head>
   <body>
     <!-- header -->
-    <%- include('mypageHeader.ejs') %>
+    <% if(login) { %> <%- include('mypageHeader.ejs') %> <% }else{ %> <%-
+    include('loginHeader.ejs') %> <% } %>
     <div class="align">
       <div class="randomBox">
         <div class="randomItem"></div>
