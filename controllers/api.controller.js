@@ -102,6 +102,7 @@ class ApiController {
   //로그아웃
   logout = async (req, res) => {
     res.clearCookie('accessToken');
+    res.clearCookie('connect.sid');
     return res.json({ message: '로그아웃 성공.' });
   };
 }
