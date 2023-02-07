@@ -26,43 +26,220 @@
     <script>
       $(document).ready(function () {
         get_products();
+        random_products();
       });
+
       function get_products() {
         $.ajax({
-          type: "GET",
-          url: "/products",
+          type: 'GET',
+          url: '/products',
           data: {},
           success: function (response) {
-            // let doc = JSON.parse(response);
-            console.log(response);
+            console.log(response.data);
             for (let e of response.data) {
-              let title = e.productName;
-              let content = e.productExp;
-              let questionNum = e.price;
-              let temp_html = `<div>${questionNum}, ${title}, ${content}</div>`;
-              $(".question__list").append(temp_html);
-            };
-            // for (let i = 0; i < response.length; i++) {
-            //   let title = response[i].productName;
-            //   let content = response[i].productExp;
-            //   let questionNum = response[i].price;
-            //   let temp_html = `<div>${questionNum}, ${title}, ${content}</div>`;
-            //   $(".question__list").append(temp_html);
-            //   console.log(temp_html)
-            // }
+              let id = e.productId;
+              let name = e.productName;
+              let spec = e.productExp;
+              let price = e.price;
+              let photo = e.productPhoto;
+              let quantity = e.quantity;
+              let count = e.userCount;
+              let created = e.createdAt;
+              let updated = e.updatedAt;
+              let temp_html = `<a class ="divTextHidden" href="/${id}"><div class="products">
+                            <div class="photoBox">
+                              <img src="${photo}"/>
+                            </div>
+                            <p>${name}</p>
+                            <p>${price}원</p>
+                          </div></a>
+                          <div class = "displayNone">${spec}${quantity}${count}${created}${updated}</div>`;
+              $('.product_list').append(temp_html);
+            }
           },
         });
       }
+
+      // 정렬 순서바꾸기 시도
+      
+      // function get_upsorted_products() {
+      //   $.ajax({
+      //     type: 'GET',
+      //     url: '/products',
+      //     data: {},
+      //     success: function (response) {
+      //       const upsorted_data = response.data.sort((a,b)=>a.createdAt - b.createdAt)
+      //       console.log(upsorted_data);
+      //       for (let e of upsorted_data) {
+      //         let id = e.productId;
+      //         let name = e.productName;
+      //         let spec = e.productExp;
+      //         let price = e.price;
+      //         let photo = e.productPhoto;
+      //         let quantity = e.quantity;
+      //         let count = e.userCount;
+      //         let created = e.createdAt;
+      //         let updated = e.updatedAt;
+      //         let temp_html = `<div class="products">
+      //                       <div class="photoBox">
+      //                         <a href="/${id}"><img src="${photo}"/></a>
+      //                       </div>
+      //                       <p>${name}</p>
+      //                       <p>${price}원</p>
+      //                       <button onclick="buy">구매</button>
+      //                       <button onclick="addProduct">장바구니</button>
+      //                     </div>
+      //                     <div class = "displayNone">${spec}${quantity}${count}${created}${updated}</div>`;
+      //         $('.product_list').append(temp_html);
+      //       }
+      //     },
+      //   });
+      // }
+      // function get_downsorted_products() {
+      //   $.ajax({
+      //     type: 'GET',
+      //     url: '/products',
+      //     data: {},
+      //     success: function (response) {
+      //       const downsorted_data = response.data.sort((a,b)=>b.createdAt - a.createdAt)
+      //       console.log(downsorted_data);
+      //       for (let e of downsorted_data) {
+      //         let id = e.productId;
+      //         let name = e.productName;
+      //         let spec = e.productExp;
+      //         let price = e.price;
+      //         let photo = e.productPhoto;
+      //         let quantity = e.quantity;
+      //         let count = e.userCount;
+      //         let created = e.createdAt;
+      //         let updated = e.updatedAt;
+      //         let temp_html = `<div class="products">
+      //                       <div class="photoBox">
+      //                         <a href="/${id}"><img src="${photo}"/></a>
+      //                       </div>
+      //                       <p>${name}</p>
+      //                       <p>${price}원</p>
+      //                       <button onclick="buy">구매</button>
+      //                       <button onclick="addProduct">장바구니</button>
+      //                     </div>
+      //                     <div class = "displayNone">${spec}${quantity}${count}${created}${updated}</div>`;
+      //         $('.product_list').append(temp_html);
+      //       }
+      //     },
+      //   });
+      // }
+
+      function random_products() {
+        $.ajax({
+          type: 'GET',
+          url: '/products',
+          data: {},
+          success: function (response) {
+            let random =
+              response.data[Math.floor(Math.random() * response.data.length)];
+            let randomId = random.productId;
+            let randomName = random.productName;
+            let randomSpec = random.productExp;
+            let randomPhoto = random.productPhoto;
+            let price = random.price;
+            let random_html = `<a class ="divTextHidden" href="/${randomId}"><div><img src="${randomPhoto}"/></div>
+                        <div><h2>${randomName}</h2></div>
+                        <div>${randomSpec}
+                          <p>${price}원</p>
+                        </div></a>`;
+            $('.randomItem').append(random_html);
+          },
+        });
+      }
+
     </script>
+    <style>
+      .displayNone {
+        display: none;
+      }
+
+      .homeNav {
+        background-color: black;
+        color: white;
+
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .align {
+        margin: auto;
+        width: 1400px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .randomBox {
+        margin: 10px;
+        padding: 20px;
+        width: 1330px;
+        border: 1px solid;
+      }
+
+      .product_list {
+        flex-direction: row;
+        display: flex;
+      }
+
+      .products {
+        padding: 5px;
+        margin: 10px;
+        width: 250px;
+        border: 1px solid;
+        flex-direction: row;
+      }
+
+      .productBox {
+        flex-direction: row;
+      }
+
+      .photoBox {
+        background-color: gray;
+        height: 120px;
+      }
+
+      .navTextHidden {
+        text-decoration: none;
+        color: white;        
+      }
+
+      .divTextHidden {
+        text-decoration: none;
+        color: black;        
+      }
+    </style>
 
     <title>공구해조</title>
   </head>
   <body>
-    <div class="ddd">왜애</div>
-    <button class="mybtn">확인</button>
-    <div class="question__list">
-      <p>뭔데?</p>
+    <nav class="homeNav">
+      <a class ="navTextHidden" href="/">공구해조</a>
+      <div>
+        <a class ="navTextHidden" href="/baskets">장바구니</a>
+        <a class ="navTextHidden" href="/join">회원가입</a>
+        <a class ="navTextHidden" href="/login">로그인</a>
+        <a>로그아웃</a>
+      </div>
+    </nav>
+    <div class="align">
+      <div class="randomBox">
+        <div class="randomItem"></div>
+      </div>
+      <!-- <select>
+        <option value="정렬 방법을 선택하세요">정렬 방법을 선택하세요</option>
+        <option value="최신순" onchange={get_upsorted_products}>최신순</option>
+        <option value="오래된순" onchange={get_downsorted_products}>오래된순</option>
+      </select> -->
+      <div class="productsBox">
+        <div class="product_list"></div>
+      </div>
     </div>
+    <!-- <script src="../static/scripts/home.js"></script> -->
   </body>
-  <!-- <script type="text/javascript" src="../static/scripts/home.js"></script> -->
 </html>

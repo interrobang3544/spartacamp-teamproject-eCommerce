@@ -5,6 +5,8 @@ const port = 8080;
 const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
+const productsRouter = require('./routes/products.routes');
+const basketsRouter = require('./routes/baskets.routes');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -15,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);
+app.use('/products', productsRouter);
+app.use('/baskets', basketsRouter);
+
 
 app.get('/login', (req, res) => {
   res.render('indexLogin', { join: false });
@@ -34,6 +39,10 @@ app.get('/admin-products', (req, res) => {
 
 app.get('/', (req, res) => {
   res.render('home');
+})
+
+app.get('/:productId', (req, res) => {
+  res.render('productSpec');
 })
 
 app.listen(port, () => {
