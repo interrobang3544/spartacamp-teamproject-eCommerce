@@ -18,7 +18,7 @@ app.use(express.static('static'));
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const maxAge = 1000 * 60 * 10;
+const maxAge = 1000 * 60 * 60 * 24;
 
 //* 세션 전역 설정
 app.use(

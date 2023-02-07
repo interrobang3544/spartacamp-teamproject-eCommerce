@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./images/shortcut_icon.ico"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <title>공구해조 | 주문</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-header__nav">
+        <div class="site-header__nav__home">
+          <a href="/">공구해조</a>
+        </div>
+        <div class="site-header__nav__columns">
+          <a href="/baskets">장바구니</a>
+          <a href="">마이페이지</a>
+          <a href="">Log Out</a>
+        </div>
+      </nav>
+    </header>
+    <main class="order-screen">
+      <h1 class="screen__title">주문내역</h1>
+      <ul class="product-list order-screen__list">
+        <% let totalPrice =0 %> <% if(Array.isArray(orderData.orderProduct)){%>
+        <%orderData.orderProduct.forEach((order)=>{%>
+        <li
+          class="product-list__item"
+          data-basket-id="<%= order.basketId%>"
+          data-user-id="<%= orderData.user.userId %>"
+          data-product-id="<%= order.productId%>"
+        >
+          <div></div>
+          <img src="<%= order.productPhoto %>" />
+          <span><%= order.productName %></span>
+          <div class="product-list__item__right-box">
+            <div class="right-box__text">
+              <span
+                >수량
+                <small id="orderQuantity"><%= order.orderQuantity %></small>
+                개</span
+              >
+              <span>
+                <small id="totalPrice">
+                  <%= (order.orderQuantity*order.price).toLocaleString('ko-KR')
+                  %>
+                </small>
+                원</span
+              >
+            </div>
+            <div></div>
+          </div>
+        </li>
+        <% totalPrice += order.orderQuantity*order.price %> <% })%>
+      </ul>
+      <% }%>
+      <h3 id="orderPrice-text">
+        전체 주문금액 <%=totalPrice.toLocaleString('ko-KR') %> 원
+      </h3>
+      <div class="order-info">
+        <label for="order-name">이름</label>
+        <input
+          type="text"
+          name="order-name"
+          id="order-name"
+          value="<%= orderData.user.nickname%>"
+          required
+        />
+        <label for="order-address">주소</label>
+        <input
+          type="text"
+          name="order-address"
+          id="order-address"
+          value="<%= orderData.user.address%>"
+          required
+        />
+        <label for="order-request">요청 사항</label>
+        <select name="order-request" id="order-request">
+          <option value="">-- 요청사항을 골라주세요 --</option>
+          <option value="1">부재시 관리실에 맡겨주세요</option>
+          <option value="2">부재시 연락주세요</option>
+          <option value="3">부재시 문 앞에 두고 가주세요</option>
+          <option value="4">직접 입력</option>
+        </select>
+        <input
+          class="hidden"
+          type="text"
+          name="direct-input"
+          id="direct-input"
+        />
+        <button id="order-btn">주문 완료</button>
+      </div>
+    </main>
+    <script src="./scripts/order.js"></script>
+  </body>
+</html>
