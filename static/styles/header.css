@@ -8,10 +8,11 @@
     background-position: center;
     background-size: cover;
     position: relative;
-    background-color:#fff;
+    background-color:#3b3b3b;
+    padding: 8px 0;
+    margin-bottom: 20px;
 }
 .header nav{
-    padding-top:10px;
     padding-left: 5px;
     padding-right: 2%;
     display: flex;
@@ -26,6 +27,9 @@
     flex: 10;
     text-align: right;
 }
+.nav-links ul {
+    margin-bottom: 0 !important;
+}
 .nav-links ul li{
     list-style: none;
     display: inline-block;
@@ -33,7 +37,7 @@
     position: relative;
 }
 .nav-links ul li a{
-    color: #000000;
+    color: #ffffff;
     text-decoration: none;
     font-size: 13px;
 }
@@ -41,7 +45,7 @@
     content: '';
     width: 0%;
     height: 2px;
-    background: #4070f4;
+    background: #eebf54;
     display: block;
     margin: auto;
     transition: 0.5s;
