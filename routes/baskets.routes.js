@@ -5,7 +5,10 @@ const authMiddleware = require('../middlewares/auth');
 const router = express.Router();
 const basketController = new BasketController();
 
-router.route('/').get(authMiddleware, basketController.getBaskets).post();
+router
+  .route('/')
+  .get(authMiddleware, basketController.getBaskets)
+  .post(authMiddleware, basketController.CreateBasket);
 router
   .route('/:id')
   .patch(authMiddleware, basketController.patchBasketQuantity)

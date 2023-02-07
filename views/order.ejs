@@ -106,7 +106,6 @@
         <button id="order-btn">주문 완료</button>
       </div>
     </main>
-    <%- include('loginModal.ejs') %>
     <script src="./scripts/order.js"></script>
     <script>
       function logout() {
@@ -114,12 +113,11 @@
           type: 'GET',
           url: '/api/auth/logout',
           success: function (response) {
-            console.log(response);
             alert(response.message);
             window.location.href = '/login';
           },
           error: function (response) {
-            customAlert(response.responseJSON.message);
+            alert(response.responseJSON.message);
           },
         });
       }

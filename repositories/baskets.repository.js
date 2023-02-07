@@ -80,6 +80,16 @@ class BasketRepository {
     });
     return basket;
   };
+
+  createBasket = async (productId, userId, quantity) => {
+    const createBasketData = await this.basketModel.create({
+      productId,
+      userId,
+      quantity,
+    });
+
+    return createBasketData;
+  };
 }
 
 module.exports = BasketRepository;

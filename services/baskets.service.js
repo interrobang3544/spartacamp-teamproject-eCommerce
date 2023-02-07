@@ -59,6 +59,20 @@ class BasketSevice {
     const msg = await this.basketRepository.deleteBasket(basketId);
     return msg;
   };
+
+  createBasket = async (productId, userId, quantity) => {
+    const createBasketData = await this.basketRepository.createBasket(
+      productId,
+      userId,
+      quantity
+    );
+
+    return {
+      productId: createBasketData.productId,
+      userId: createBasketData.userId,
+      quantity: createBasketData.quantity,
+    };
+  };
 }
 
 module.exports = BasketSevice;

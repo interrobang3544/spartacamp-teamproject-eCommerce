@@ -19,6 +19,7 @@ class ProductRepository {
       const productData = await this.productModel.findAll({
         where: { productId },
       });
+
       return productData;
     } catch (error) {
       error.status = 500;
@@ -125,9 +126,24 @@ class ProductRepository {
   };
 
   findAllProduct = async () => {
-    const products = await Products.findAll();
+    const products = await this.productModel.findAll();
 
     return products;
+  };
+
+  updateUserCount = async (productId, userCount) => {
+    const product = await this.findProductById(productId);
+    let totalCount = JSON.parse(JSON.stringify(product)).userCount;
+    totalCount += Number(userCount);
+    await this.productModel.update(
+      {
+        userCount: totalCount,
+      },
+      {
+        where: { productId },
+      }
+    );
+    return;
   };
 }
 
