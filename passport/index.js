@@ -33,10 +33,10 @@ module.exports = (app) => {
             // 가입되지 않는 유저면 회원가입 시키고 로그인을 시킨다
             const newUser = await User.create({
               email: profile._json.kakao_account.email,
-              nickname: `KAKAO${profile.id}`,
-              id: `KAKAO${profile.id}`,
+              nickname: `KAKAO_${profile.id}`,
+              id: `KAKAO_${profile.id}`,
               password: await bcrypt.hash('aaaa0000', 12),
-              address: 'null',
+              address: '기본 비밀번호는 aaaa0000입니다 변경해주세요',
             });
             console.log(newUser);
 
