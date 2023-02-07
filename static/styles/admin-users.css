@@ -1,10 +1,16 @@
 #main-container {
   width: 90%;
+  height: 750px;
   margin: auto;
 }
 
+.title h1 {
+  font-weight: bolder;
+}
+
 table {
-  margin: auto;
+  width: 100%;
+  margin: 20px auto;
   text-align: center;
 }
 
@@ -49,4 +55,20 @@ table {
   border-color: #000000;
   text-align: center;
   vertical-align: middle;
+}
+
+.btn-confirm {
+  margin-top: 10px;
+  float: right;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: center;
+}
+
+.search {
+  width: 400px;
+  margin-left: 48px;
+  margin-right: 10px;
 }

@@ -6,6 +6,21 @@ class UserRepository {
     this.userModel = UserModel;
   }
 
+  changePassword = async (userId, hashed) => {
+    try {
+      const newUserData = await this.userModel.update(
+        {
+          password: hashed,
+        },
+        { where: { userId } }
+      );
+      return newUserData;
+    } catch (error) {
+      error.status = 500;
+      throw error;
+    }
+  };
+
   findById = async (id) => {
     try {
       const userById = await this.userModel.findAll({
@@ -57,11 +72,10 @@ class UserRepository {
     }
   };
 
-  changeUserData = async (userId, hashed, nickname, email, address) => {
+  changeUserData = async (userId, nickname, email, address) => {
     try {
       const newUserData = await this.userModel.update(
         {
-          password: hashed,
           nickname: nickname,
           email: email,
           address: address,
@@ -80,14 +94,18 @@ class UserRepository {
       raw: true,
       offset: offset,
       limit: limit,
-      order: [['updatedAt', 'ASC']],
+      order: [['createdAt', 'DESC']],
     });
     // console.log(users)
     return users;
   };
 
-  adminFindUsersBySearchWord = async (searchWord) => {
-    const users = await this.userModel.findAll({
+  adminFindUsersBySearchWord = async (limit, offset, searchWord) => {
+    const users = await this.userModel.findAndCountAll({
+      raw: true,
+      offset: offset,
+      limit: limit,
+      order: [['createdAt', 'DESC']],
       where: {
         [Op.or]: [
           {
@@ -114,6 +132,43 @@ class UserRepository {
       },
     });
     return users;
+  };
+
+  findUserById = async (userId) => {
+    const user = await this.userModel.findByPk(userId);
+    return user;
+  };
+
+  updateUser = async (userId, id, nickname, email, address, type, blackList) => {
+    const updateUserData = await this.userModel.update(
+      {
+        id,
+        nickname,
+        email,
+        address,
+        type,
+        blackList
+      },
+      { where: { userId } }
+    );
+
+    return updateUserData;
+  };
+
+  deleteUser = async (userId) => {
+    const deleteUserData = await this.userModel.destroy({
+      where: { userId },
+    });
+
+    return deleteUserData;
+  };
+  findUserById2 = async (userId) => {
+    const user = await this.userModel.findOne({
+      where: {
+        userId,
+      },
+    });
+    return user;
   };
 }
 

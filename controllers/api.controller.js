@@ -9,7 +9,26 @@ class ApiController {
     try {
       const { id, password, nickname, email, address } = req.body;
       if (!id || !password || !nickname || !email || !address) {
-        return res.status(400).json({ message: '모든 값을 입력하세요.' });
+        return res.status(400).json({ errorMessage: '모든 값을 입력하세요.' });
+      }
+
+      // 아이디: 영어대소문자숫자
+      const idCheck = /^[A-Za-z0-9]{3,}$/;
+      // 비밀번호: 영어대소문자숫자
+      const passwordCheck = /^[A-Za-z0-9]{3,}$/;
+      // 닉네임:한글포함영어대소문자숫자
+      const nicknameCheck = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
+      // 이메일: aaa@aaa.aaa
+      const emailCheck = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+      if (
+        !idCheck.test(id) ||
+        !passwordCheck.test(password) ||
+        !nicknameCheck.test(nickname) ||
+        !emailCheck.test(email)
+      ) {
+        return res.status(412).json({
+          errorMessage: '형식이 올바르지 않습니다. 다시 확인해주세요.',
+        });
       }
 
       const foundById = await this.userService.findById(id);
@@ -17,7 +36,7 @@ class ApiController {
       if (foundById.length > 0) {
         return res
           .status(409)
-          .json({ message: `${id}는 이미 존재하는 아이디입니다.` });
+          .json({ errorMessage: `${id}는 이미 존재하는 아이디입니다.` });
       }
 
       const foundByNickname = await this.userService.findByNickname(nickname);
@@ -25,7 +44,7 @@ class ApiController {
       if (foundByNickname.length > 0) {
         return res
           .status(409)
-          .json({ message: `${nickname}는 이미 존재하는 닉네임입니다.` });
+          .json({ errorMessage: `${nickname}는 이미 존재하는 닉네임입니다.` });
       }
 
       const hashed = await bcrypt.hash(password, 12);
@@ -42,7 +61,7 @@ class ApiController {
         .status(201)
         .json({ data: createUser, message: '회원가입이 완료되었습니다.' });
     } catch (error) {
-      res.status(400).json({ errorMessage: error.message });
+      res.status(400).json({ errorMessage: '회원가입이 실패하였습니다' });
     }
   };
 
@@ -52,13 +71,12 @@ class ApiController {
       const { id, password } = req.body;
 
       const user = await this.userService.findById(id);
-      // console.log(user, 456465);
+
       const passwordTest = await bcrypt.compare(password, user[0].password);
-      // console.log(passwordTest, 78978978);
       if (user.length === 0 || !passwordTest) {
         return res
           .status(401)
-          .json({ message: '사용자가 없거나 비밀번호가 틀렸습니다.' });
+          .json({ errorMessage: '사용자가 없거나 비밀번호가 틀렸습니다.' });
       }
 
       const accessToken = jwt.sign(
@@ -77,8 +95,7 @@ class ApiController {
 
       return res.status(200).json({ message: '로그인 성공.' });
     } catch (error) {
-      console.log(error);
-      return res.status(400).json({ message: '로그인 실패.' });
+      return res.status(400).json({ errorMessage: '로그인 실패.' });
     }
   };
 

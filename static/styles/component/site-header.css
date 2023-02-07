@@ -1,0 +1,28 @@
+.site-header {
+  background-color: var(--header-color);
+  padding: 20px;
+}
+
+.site-header__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-header__nav a {
+  color: white;
+  font-weight: 700;
+}
+
+.site-header__nav__columns a {
+  margin-left: 10px;
+}
+
+#logoutBtn {
+  background-color: var(--header-color);
+  color: white;
+  border: none;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}

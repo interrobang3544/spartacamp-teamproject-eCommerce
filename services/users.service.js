@@ -8,6 +8,19 @@ class UserService {
   productRepository = new ProductRepository(Product);
   orderRepository = new OrderRepository(Order);
 
+  changePassword = async (userId, hashed) => {
+    try {
+      const changePassword = await this.userRepository.changePassword(
+        userId,
+        hashed
+      );
+
+      return changePassword;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   findById = async (id) => {
     try {
       const userById = await this.userRepository.findById(id);
@@ -108,6 +121,7 @@ class UserService {
 
       const order = await Promise.all(
         orderData.map(async (data) => {
+          const orderQuantity = data.quantity;
           const orderCreateAt = data.createdAt;
           const productData = await this.productRepository.getProductDataById(
             data.productId
@@ -118,6 +132,7 @@ class UserService {
               productExp: data.productExp,
               price: data.price,
               productPhoto: data.productPhoto,
+              orderQuantity: orderQuantity,
               orderCreateAt: orderCreateAt,
               userCount: data.userCount,
             };
@@ -132,11 +147,10 @@ class UserService {
     }
   };
 
-  changeUserData = async (userId, hashed, nickname, email, address) => {
+  changeUserData = async (userId, nickname, email, address) => {
     try {
       const changeUserData = await this.userRepository.changeUserData(
         userId,
-        hashed,
         nickname,
         email,
         address
@@ -154,22 +168,52 @@ class UserService {
     return users;
   };
 
-  adminFindUsersBySearchWord = async (searchWord) => {
+  adminFindUsersBySearchWord = async (limit, offset, searchWord) => {
     const users = await this.userRepository.adminFindUsersBySearchWord(
+      limit,
+      offset,
       searchWord
     );
-    return users.map((user) => {
-      return {
-        userId: user.userId,
-        id: user.id,
-        password: user.password,
-        nickname: user.nickname,
-        email: user.email,
-        address: user.address,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      };
-    });
+    return users;
+  };
+
+  updateUser = async (userId, id, nickname, email, address, type, blackList) => {
+    const findUser = await this.userRepository.findUserById(userId);
+    if (!findUser) throw new Error("Review doesn't exist");
+
+    await this.userRepository.updateUser(userId, id, nickname, email, address, type, blackList);
+
+    const updateUser = await this.userRepository.findUserById(userId);
+
+    return {
+      userId: updateUser.userId,
+      id: updateUser.id,
+      nickname: updateUser.nickname,
+      email: updateUser.email,
+      address: updateUser.address,
+      type: updateUser.type,
+      blackList: updateUser.blackList,
+      createdAt: updateUser.createdAt,
+      updatedAt: updateUser.updatedAt,
+    };
+  };
+
+  deleteUser = async (userId) => {
+    const findUser = await this.userRepository.findUserById(userId);
+    if (!findUser) throw new Error("Review doesn't exist");
+
+    await this.userRepository.deleteUser(userId);
+
+    return {
+      userId: findUser.userId,
+      id: findUser.id,
+      password: findUser.password,
+      nickname: findUser.nickname,
+      email: findUser.email,
+      address: findUser.address,
+      createdAt: findUser.createdAt,
+      updatedAt: findUser.updatedAt,
+    };
   };
 }
 
