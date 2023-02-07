@@ -44,7 +44,6 @@ class OrderSevice {
       return { ...order, ...productData[idx] };
     });
 
-    console.log('test', orderProduct);
     return { orderProduct, user };
   };
 
@@ -54,6 +53,9 @@ class OrderSevice {
       request,
       address,
     }));
+    await data.forEach((data) => {
+      this.productRepository.updateUserCount(data.productId, data.quantity);
+    });
     await this.orderRepository.createOrder(data);
     await orderInfo.forEach((order) => {
       this.basketRepository.deleteBasket(order.basketId);

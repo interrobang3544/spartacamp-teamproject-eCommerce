@@ -100,8 +100,12 @@ class UserRepository {
     return users;
   };
 
-  adminFindUsersBySearchWord = async (searchWord) => {
-    const users = await this.userModel.findAll({
+  adminFindUsersBySearchWord = async (limit, offset, searchWord) => {
+    const users = await this.userModel.findAndCountAll({
+      raw: true,
+      offset: offset,
+      limit: limit,
+      order: [['createdAt', 'DESC']],
       where: {
         [Op.or]: [
           {
@@ -135,13 +139,15 @@ class UserRepository {
     return user;
   };
 
-  updateUser = async (userId, id, nickname, email, address) => {
+  updateUser = async (userId, id, nickname, email, address, type, blackList) => {
     const updateUserData = await this.userModel.update(
       {
         id,
         nickname,
         email,
         address,
+        type,
+        blackList
       },
       { where: { userId } }
     );

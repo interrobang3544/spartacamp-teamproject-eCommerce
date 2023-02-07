@@ -168,29 +168,20 @@ class UserService {
     return users;
   };
 
-  adminFindUsersBySearchWord = async (searchWord) => {
+  adminFindUsersBySearchWord = async (limit, offset, searchWord) => {
     const users = await this.userRepository.adminFindUsersBySearchWord(
+      limit,
+      offset,
       searchWord
     );
-    return users.map((user) => {
-      return {
-        userId: user.userId,
-        id: user.id,
-        password: user.password,
-        nickname: user.nickname,
-        email: user.email,
-        address: user.address,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      };
-    });
+    return users;
   };
 
-  updateUser = async (userId, id, nickname, email, address) => {
+  updateUser = async (userId, id, nickname, email, address, type, blackList) => {
     const findUser = await this.userRepository.findUserById(userId);
     if (!findUser) throw new Error("Review doesn't exist");
 
-    await this.userRepository.updateUser(userId, id, nickname, email, address);
+    await this.userRepository.updateUser(userId, id, nickname, email, address, type, blackList);
 
     const updateUser = await this.userRepository.findUserById(userId);
 
@@ -200,6 +191,8 @@ class UserService {
       nickname: updateUser.nickname,
       email: updateUser.email,
       address: updateUser.address,
+      type: updateUser.type,
+      blackList: updateUser.blackList,
       createdAt: updateUser.createdAt,
       updatedAt: updateUser.updatedAt,
     };

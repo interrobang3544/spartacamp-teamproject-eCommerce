@@ -12,22 +12,13 @@ class ProductService {
     return products;
   };
 
-  adminFindProductsBySearchWord = async (searchWord) => {
+  adminFindProductsBySearchWord = async (limit, offset, searchWord) => {
     const products = await this.productRepository.adminFindProductsBySearchWord(
+      limit,
+      offset,
       searchWord
     );
-    return products.map((product) => {
-      return {
-        productId: product.productId,
-        productName: product.productName,
-        productExp: product.productExp,
-        price: product.price,
-        quantity: product.quantity,
-        userCount: product.userCount,
-        createdAt: product.createdAt,
-        updatedAt: product.updatedAt,
-      };
-    });
+    return products;
   };
 
   createProduct = async (
@@ -116,15 +107,15 @@ class ProductService {
       updatedAt: findProduct.updatedAt,
     };
   };
-  
+
   findAllProduct = async () => {
     const allProduct = await this.productRepository.findAllProduct();
 
     allProduct.sort((a, b) => {
       return b.createdAt - a.createdAt;
-    })
+    });
 
-    return allProduct.map(product => {
+    return allProduct.map((product) => {
       return {
         productId: product.productId,
         productName: product.productName,
@@ -134,10 +125,10 @@ class ProductService {
         quantity: product.quantity,
         userCount: product.userCount,
         createdAt: product.createdAt,
-        updatedAt: product.updatedAt
-      }
+        updatedAt: product.updatedAt,
+      };
     });
-  }
+  };
 }
 
 module.exports = ProductService;
