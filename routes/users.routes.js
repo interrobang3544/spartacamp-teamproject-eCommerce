@@ -8,5 +8,6 @@ const usersController = new UsersController();
 
 router.get('/', authMiddleware, usersController.getUserData);
 router.put('/', authMiddleware, usersController.changeUserData);
+router.put('/changePassword', authMiddleware, usersController.changePassword);
 
 module.exports = router;

@@ -8,6 +8,19 @@ class UserService {
   productRepository = new ProductRepository(Product);
   orderRepository = new OrderRepository(Order);
 
+  changePassword = async (userId, hashed) => {
+    try {
+      const changePassword = await this.userRepository.changePassword(
+        userId,
+        hashed
+      );
+
+      return changePassword;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   findById = async (id) => {
     try {
       const userById = await this.userRepository.findById(id);
@@ -108,6 +121,7 @@ class UserService {
 
       const order = await Promise.all(
         orderData.map(async (data) => {
+          const orderQuantity = data.quantity;
           const orderCreateAt = data.createdAt;
           const productData = await this.productRepository.getProductDataById(
             data.productId
@@ -118,6 +132,7 @@ class UserService {
               productExp: data.productExp,
               price: data.price,
               productPhoto: data.productPhoto,
+              orderQuantity: orderQuantity,
               orderCreateAt: orderCreateAt,
               userCount: data.userCount,
             };
@@ -132,11 +147,10 @@ class UserService {
     }
   };
 
-  changeUserData = async (userId, hashed, nickname, email, address) => {
+  changeUserData = async (userId, nickname, email, address) => {
     try {
       const changeUserData = await this.userRepository.changeUserData(
         userId,
-        hashed,
         nickname,
         email,
         address
