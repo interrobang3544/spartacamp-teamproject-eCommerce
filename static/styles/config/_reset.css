@@ -130,3 +130,8 @@ table {
 a {
   text-decoration: none;
 }
+
+small {
+  font-weight: bold;
+  font-size: 15px;
+}

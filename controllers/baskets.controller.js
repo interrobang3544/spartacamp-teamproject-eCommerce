@@ -30,7 +30,6 @@ class BasketController {
   orderBasket = async (req, res) => {
     const { orderList } = req.body;
     req.session.orderList = orderList;
-    console.log(req.session.orderList);
     return res.sendStatus(201);
   };
 }

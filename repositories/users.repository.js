@@ -156,6 +156,14 @@ class UserRepository {
 
     return deleteUserData;
   };
+  findUserById2 = async (userId) => {
+    const user = await this.userModel.findOne({
+      where: {
+        userId,
+      },
+    });
+    return user;
+  };
 }
 
 module.exports = UserRepository;

@@ -9,6 +9,7 @@
 
 /* screens */
 @import './screens/basket-screen.css';
+@import './screens/order-screen.css';
 
 body {
   width: 100%;
@@ -19,4 +20,8 @@ body {
   display: grid;
   grid-template-rows: 55px auto;
   /* grid-auto-rows: 55px 90%; */
+}
+
+.hidden {
+  display: none;
 }

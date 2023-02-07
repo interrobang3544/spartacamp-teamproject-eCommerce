@@ -1,0 +1,30 @@
+.order-screen {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 70px 400px 40px auto;
+  row-gap: 30px;
+}
+
+#orderPrice-text {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#order-name {
+  width: 200px;
+  text-align: center;
+}
+
+#order-address,
+#direct-input {
+  width: 400px;
+  text-align: center;
+}

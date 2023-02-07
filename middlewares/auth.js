@@ -9,9 +9,12 @@ module.exports = async (req, res, next) => {
 
   let [authType, authToken] = cookie.split('=');
 
+  // console.log(authToken);
+  // console.log(authToken.includes('connect.sid'));
   // 소셜로그인 인증
   if (authToken.includes('connect.sid')) {
     authToken = authToken.split(';')[0];
+    // console.log(authToken);
   }
 
   if (!authToken || authType !== 'accessToken') {

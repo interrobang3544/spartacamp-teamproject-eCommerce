@@ -1,5 +1,7 @@
 const orderBtn = document.getElementById('order-btn');
-const basketList = document.querySelectorAll('.product-list__item');
+const basketList = document.querySelectorAll(
+  '.basket-screen__list .product-list__item'
+);
 const totalOrderPriceSmall = document.getElementById('totalOrderPrice');
 let totalOrderPrice = 0;
 let orderList = [];
@@ -47,6 +49,9 @@ const checkProduct = (check, price, basketId) => {
 
 //* 주문하기
 const handleOrderBtn = async (orderList) => {
+  if (orderList.length === 0) {
+    return;
+  }
   const response = await fetch('/baskets/order', {
     method: 'POST',
     headers: {
