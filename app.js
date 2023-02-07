@@ -6,6 +6,11 @@ const server = http.createServer(app);
 const io = socket(server);
 const port = 8080;
 
+// 카카오 소셜로그인
+const passportConfig = require('./passport');
+const session = require('express-session');
+passportConfig(app);
+
 const loginMiddleware = require('./middlewares/loginCheck');
 const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
@@ -17,6 +22,13 @@ app.set('views', './views');
 app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.KAKAO_SECRET,
+  })
+);
 app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);
