@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./images/shortcut_icon.ico"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
+    />
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+    <title>공구해조 | 장바구니</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-header__nav">
+        <div class="site-header__nav__home">
+          <a href="/">공구해조</a>
+        </div>
+        <div class="site-header__nav__columns">
+          <a href="/baskets">장바구니</a>
+          <a href="/mypage">마이페이지</a>
+          <a href="/chattingOnline">실시간 상담 채팅</a>
+          <button
+            type="button"
+            class="btn btn-link"
+            id="logoutBtn"
+            onclick="logout()"
+          >
+            Log Out
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main class="basket-screen">
+      <h1 class="screen__title">장바구니</h1>
+      <div class="order-box">
+        <span>전체 주문 금액 <small id="totalOrderPrice">0</small>원 </span>
+        <button id="order-btn">주문하기</button>
+      </div>
+      <ul class="product-list basket-screen__list">
+        <% if(Array.isArray(basketList)){%> <% basketList.forEach((basket)=>{%>
+        <li class="product-list__item" data-basket-id="<%= basket.basketId%>">
+          <input type="checkbox" name="basket-check" id="basket-check" />
+          <img src="<%= basket.productPhoto %>" />
+          <span><%= basket.productName %></span>
+          <div class="product-list__item__right-box">
+            <div class="right-box__text">
+              <span
+                >수량
+                <input
+                  type="number"
+                  name="input-basket-quantity"
+                  id="input-basket-quantity"
+                  min="1"
+                  max="999"
+                  value="<%= basket.basketQuantity %>"
+                  required
+                />
+                개</span
+              >
+              <span>
+                <small id="totalPrice"> <%= basket.totalPrice %> </small>
+                원</span
+              >
+            </div>
+            <div>
+              <button id="basket-edit-btn" type="button">수정</button>
+              <button id="basket-delete-btn" type="button">삭제</button>
+            </div>
+          </div>
+        </li>
+        <% })}%>
+      </ul>
+    </main>
+    <script src="./scripts/basket.js"></script>
+    <script>
+      function logout() {
+        $.ajax({
+          type: 'GET',
+          url: '/api/auth/logout',
+          success: function (response) {
+            alert(response.message);
+            window.location.href = '/login';
+          },
+          error: function (response) {
+            alert(response.responseJSON.message);
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
