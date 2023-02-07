@@ -107,7 +107,7 @@ class UsersController {
 
   adminGetAllUsers = async (req, res, next) => {
     try {
-      let limit = 5;
+      let limit = 10;
       let offset = 0 + (req.query.page - 1) * limit;
       const usersInfo = await this.userService.adminFindAllUsers(limit, offset);
       // console.log(usersInfo)
@@ -138,13 +138,15 @@ class UsersController {
 
   adminUpdateUser = async (req, res, next) => {
     const { userId } = req.params
-    const { id, nickname, email, address } = req.body;
+    const { id, nickname, email, address, type, blackList } = req.body;
     const updateUser = await this.userService.updateUser(
       userId,
       id,
       nickname,
       email,
-      address
+      address,
+      type,
+      blackList
     );
 
     res.status(200).json({ data: updateUser });

@@ -37,8 +37,12 @@ class ProductRepository {
     return products;
   };
 
-  adminFindProductsBySearchWord = async (searchWord) => {
-    const products = await this.productModel.findAll({
+  adminFindProductsBySearchWord = async (limit, offset, searchWord) => {
+    const products = await this.productModel.findAndCountAll({
+      raw: true,
+      offset: offset,
+      limit: limit,
+      order: [['updatedAt', 'ASC']],
       where: {
         [Op.or]: [
           {
@@ -53,16 +57,6 @@ class ProductRepository {
           },
           {
             price: {
-              [Op.like]: '%' + searchWord + '%',
-            },
-          },
-          {
-            quantity: {
-              [Op.like]: '%' + searchWord + '%',
-            },
-          },
-          {
-            userCount: {
               [Op.like]: '%' + searchWord + '%',
             },
           },

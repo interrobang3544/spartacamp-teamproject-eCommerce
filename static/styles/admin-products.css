@@ -1,12 +1,16 @@
 #main-container {
   width: 90%;
-  height: 1000px;
+  height: 750px;
   margin: auto;
 }
 
 .title {
   display: flex;
   justify-content: space-between;
+}
+
+.title h1 {
+  font-weight: bolder;
 }
 
 .product-box {
@@ -43,4 +47,15 @@
 .btn-confirm {
   margin-top: 10px;
   float: right;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: center;
+}
+
+.search {
+  width: 400px;
+  margin-left: 48px;
+  margin-right: 10px;
 }

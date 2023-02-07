@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: DataTypes.STRING,
       address: DataTypes.STRING,
+      type: DataTypes.STRING,
+      blackList: DataTypes.STRING,
     },
     {
       sequelize,

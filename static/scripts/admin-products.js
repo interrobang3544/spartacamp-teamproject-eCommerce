@@ -1,9 +1,15 @@
+checkAccount();
 getProducts(1);
 
 // 전체 상품 조회
 function getProducts(page) {
+  let url = `/admin/products`;
+  let searchword = document.getElementById('search').value;
+  if (searchword) {
+    url = `/admin/products/search/${searchword}`;
+  }
   axios
-    .get(`/admin/products`, { params: { page } })
+    .get(url, { params: { page } })
     .then((response) => {
       let { totalPage } = response.data;
       let { data } = response.data;
@@ -127,7 +133,6 @@ function customModal2(
   document.getElementById('modify-product-quantity').value = quantity;
   document.getElementById('modify-product-participant').value = userCount;
   productModifyModal.show();
-  ;
 }
 
 // 상품 등록 모달창 이미지
@@ -139,4 +144,31 @@ function loadFile(input, elementId) {
   newImage.style.width = '100%';
   newImage.style.height = '100%';
   newImage.style.objectFit = 'contain';
+}
+
+// 계정 확인
+function checkAccount() {
+  axios
+    .get('/api/auth/login/check')
+    .then((response) => {
+      if (response.data.user.type !== 2) {
+        alert('관리자 계정이 아닙니다.');
+        window.location.replace(`/`);
+      }
+    })
+    .catch((error) => {
+      window.location.replace(`/`);
+    });
+}
+
+// 로그아웃
+function logout() {
+  axios
+  .get('/api/auth/logout')
+  .then((response) => {
+    window.location.replace(`/`);
+  })
+  .catch((error) => {
+    window.location.replace(`/`);
+  });
 }
