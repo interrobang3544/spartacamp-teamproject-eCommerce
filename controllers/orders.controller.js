@@ -15,8 +15,7 @@ class OrderController {
   //* 주문 완료
   postOrder = async (req, res) => {
     const { order, request, address } = req.body;
-
-    this.orderService.completeOrder(order, request, address);
+    await this.orderService.completeOrder(order, request, address);
     return res.sendStatus(201);
   };
 }

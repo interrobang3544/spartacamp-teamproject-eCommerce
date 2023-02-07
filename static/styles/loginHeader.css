@@ -10,12 +10,15 @@
 .site-header__nav a {
   color: white;
   font-weight: 700;
+  text-decoration: none;
 }
 .site-header__nav button {
   color: white;
   font-weight: 700;
   margin: 0 0 5px 0;
+  text-decoration: none;
 }
 .site-header__nav__columns a {
   margin-left: 10px;
+  text-decoration: none;
 }

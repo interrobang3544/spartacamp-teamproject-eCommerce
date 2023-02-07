@@ -12,6 +12,8 @@ const loginMiddleware = require('./middlewares/loginCheck');
 const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
+const productsRouter = require('./routes/products.routes');
+const basketsRouter = require('./routes/baskets.routes');
 
 //* express 할당
 const app = express();
@@ -57,6 +59,7 @@ app.use('/orders', orderRouter);
 app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);
+app.use('/products', productsRouter);
 
 // ejs루트-----------------------------------------------------------------------------------------------
 app.get('/login', (req, res) => {
@@ -113,6 +116,10 @@ app.get('/admin-products', (req, res) => {
 
 app.get('/', (req, res) => {
   res.render('home');
+});
+
+app.get('/:productId', (req, res) => {
+  res.render('productSpec');
 });
 
 //socket--------------------------------------------------------------------------------
@@ -187,8 +194,6 @@ io.on('connection', function (socket) {
     io.sockets.emit('room_change', publicRooms());
   });
 });
-
-// 소켓끝-----------------------------------------------------------
 
 //* 서버 리슨
 server.listen(PORT, () => {
