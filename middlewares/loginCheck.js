@@ -9,7 +9,13 @@ module.exports = async (req, res, next) => {
     return;
   }
 
-  const [authType, authToken] = cookie.split('=');
+  let [authType, authToken] = cookie.split('=');
+
+  // 소셜로그인 인증
+  if (authToken.includes('connect.sid')) {
+    authToken = authToken.split(';')[0];
+  }
+
   if (!authToken || authType !== 'accessToken') {
     res.locals.user = false;
     next();
