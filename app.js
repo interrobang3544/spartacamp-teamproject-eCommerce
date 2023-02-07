@@ -74,6 +74,10 @@ app.get('/admin-products', (req, res) => {
   res.render('admin-products');
 });
 
+app.get('/', (req, res) => {
+  res.render('home');
+})
+
 //socket--------------------------------------------------------------------------------
 // public room
 function publicRooms() {
@@ -146,6 +150,8 @@ io.on('connection', function (socket) {
     io.sockets.emit('room_change', publicRooms());
   });
 });
+
+// 소켓끝-----------------------------------------------------------
 
 server.listen(port, () => {
   console.log(port, '포트로 서버가 켜졌어요!');

@@ -90,6 +90,30 @@ class ProductRepository {
     return product;
   };
 
+  updateProduct = async (
+    productId,
+    productName,
+    productExp,
+    price,
+    productPhoto,
+    quantity,
+    userCount
+  ) => {
+    const updateProductData = await this.productModel.update(
+      {
+        productName,
+        productExp,
+        price,
+        productPhoto,
+        quantity,
+        userCount,
+      },
+      { where: { productId } }
+    );
+
+    return updateProductData;
+  };
+
   deleteProduct = async (productId) => {
     const deleteProductData = await this.productModel.destroy({
       where: { productId },
@@ -97,6 +121,12 @@ class ProductRepository {
 
     return deleteProductData;
   };
+
+  findAllProduct = async () => {
+    const products = await Products.findAll();
+
+    return products;
+  }
 }
 
 module.exports = ProductRepository;

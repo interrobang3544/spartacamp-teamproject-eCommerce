@@ -94,7 +94,7 @@ class UserRepository {
       raw: true,
       offset: offset,
       limit: limit,
-      order: [['updatedAt', 'ASC']],
+      order: [['createdAt', 'DESC']],
     });
     // console.log(users)
     return users;
@@ -128,6 +128,33 @@ class UserRepository {
       },
     });
     return users;
+  };
+
+  findUserById = async (userId) => {
+    const user = await this.userModel.findByPk(userId);
+    return user;
+  };
+
+  updateUser = async (userId, id, nickname, email, address) => {
+    const updateUserData = await this.userModel.update(
+      {
+        id,
+        nickname,
+        email,
+        address,
+      },
+      { where: { userId } }
+    );
+
+    return updateUserData;
+  };
+
+  deleteUser = async (userId) => {
+    const deleteUserData = await this.userModel.destroy({
+      where: { userId },
+    });
+
+    return deleteUserData;
   };
 }
 
