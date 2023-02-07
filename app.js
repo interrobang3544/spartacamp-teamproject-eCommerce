@@ -13,7 +13,6 @@ const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
 const productsRouter = require('./routes/products.routes');
-const basketsRouter = require('./routes/baskets.routes');
 
 //* express 할당
 const app = express();

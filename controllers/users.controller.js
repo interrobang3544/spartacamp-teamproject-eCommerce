@@ -110,7 +110,7 @@ class UsersController {
       let limit = 10;
       let offset = 0 + (req.query.page - 1) * limit;
       const usersInfo = await this.userService.adminFindAllUsers(limit, offset);
-      // console.log(usersInfo)
+
       return res.status(200).json({
         totalPage: Math.ceil(usersInfo.count / limit),
         data: usersInfo.rows,
@@ -137,7 +137,7 @@ class UsersController {
   };
 
   adminUpdateUser = async (req, res, next) => {
-    const { userId } = req.params
+    const { userId } = req.params;
     const { id, nickname, email, address, type, blackList } = req.body;
     const updateUser = await this.userService.updateUser(
       userId,
