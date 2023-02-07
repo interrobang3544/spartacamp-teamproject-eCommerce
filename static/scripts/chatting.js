@@ -85,7 +85,6 @@ function showRoom() {
     type: 'GET',
     url: '/api/auth/login/check',
     success: function (response) {
-      console.log(response.user);
       if (response.user.type === 2) {
         room.hidden = false;
         roomInput.hidden = false;
