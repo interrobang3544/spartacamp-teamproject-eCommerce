@@ -81,14 +81,22 @@ function showRoom() {
   nicknameInput.hidden = true;
   messageInput.hidden = false;
 
-  // 관리자만 룸 목록 볼 수 있음
-  if (nickname.value === '관리자') {
-    room.hidden = false;
-    roomInput.hidden = false;
-    // 방 이름 보여주기
-    const h3 = room.querySelector('h3');
-    h3.innerText = `상담 중 :  ${roomName}`;
-  }
+  $.ajax({
+    type: 'GET',
+    url: '/api/auth/login/check',
+    success: function (response) {
+      if (response.user.type === 2) {
+        room.hidden = false;
+        roomInput.hidden = false;
+        // 방 이름 보여주기
+        const h3 = room.querySelector('h3');
+        h3.innerText = `상담 중 :  ${roomName}`;
+      }
+    },
+    error: function (response) {
+      customAlert(response.responseJSON.message);
+    },
+  });
 
   // 메시지 전송이벤트 발생
   messageInput.addEventListener('submit', send);
