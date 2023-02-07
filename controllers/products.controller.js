@@ -129,6 +129,14 @@ class ProductsController {
 
     res.status(200).json({ data: products });
   };
+
+  getProductspec = async (req, res, next) => {
+    const { productId } = req.params;
+    const productspec = await this.productService.findProductSpec(productId);
+    // console.log(productspec);
+
+    res.status(200).json({ data: productspec });
+  };
 }
 
 module.exports = ProductsController;
