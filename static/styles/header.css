@@ -20,12 +20,11 @@
     flex-wrap: nowrap;
 }
 #logo{
-    height: 60px;
+    height: 42px;
 }
 .nav-links{
     flex: 10;
     text-align: right;
-    padding-bottom: 26px;
 }
 .nav-links ul li{
     list-style: none;

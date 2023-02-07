@@ -54,7 +54,7 @@ function getUsers(page) {
         }
         temp.setAttribute('class', 'user-data');
         temp.innerHTML = `
-          <td>${(page - 1) * 5 + i + 1}</td>
+          <td>${(page - 1) * 10 + i + 1}</td>
           <td>${data[i].id}</td>
           <td>${data[i].nickname}</td>
           <td>${data[i].email}</td>
@@ -156,6 +156,18 @@ function checkAccount() {
       }
     })
     .catch((error) => {
-      console.log('err', error);
+      window.location.replace(`/`);
     });
+}
+
+// 로그아웃
+function logout() {
+  axios
+  .get('/api/auth/logout')
+  .then((response) => {
+    window.location.replace(`/`);
+  })
+  .catch((error) => {
+    window.location.replace(`/`);
+  });
 }

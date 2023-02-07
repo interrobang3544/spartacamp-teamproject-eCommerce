@@ -157,7 +157,18 @@ function checkAccount() {
       }
     })
     .catch((error) => {
-      console.log('err', error);
+      window.location.replace(`/`);
     });
 }
 
+// 로그아웃
+function logout() {
+  axios
+  .get('/api/auth/logout')
+  .then((response) => {
+    window.location.replace(`/`);
+  })
+  .catch((error) => {
+    window.location.replace(`/`);
+  });
+}
