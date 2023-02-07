@@ -10,7 +10,6 @@ const loginMiddleware = require('./middlewares/loginCheck');
 const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
-const { disconnect } = require('process');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
