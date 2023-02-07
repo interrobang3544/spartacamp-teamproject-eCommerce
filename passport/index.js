@@ -38,7 +38,6 @@ module.exports = (app) => {
               password: await bcrypt.hash('aaaa0000', 12),
               address: '기본 비밀번호는 aaaa0000입니다 변경해주세요',
             });
-            console.log(newUser);
 
             done(null, newUser); // 회원가입하고 로그인 인증 완료
           }

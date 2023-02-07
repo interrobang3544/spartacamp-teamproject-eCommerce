@@ -36,7 +36,6 @@
           url: '/products',
           data: {},
           success: function (response) {
-            console.log(response.data);
             for (let e of response.data) {
               let id = e.productId;
               let name = e.productName;

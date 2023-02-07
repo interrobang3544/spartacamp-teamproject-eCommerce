@@ -96,7 +96,6 @@ class UserRepository {
       limit: limit,
       order: [['createdAt', 'DESC']],
     });
-    // console.log(users)
     return users;
   };
 
@@ -139,7 +138,15 @@ class UserRepository {
     return user;
   };
 
-  updateUser = async (userId, id, nickname, email, address, type, blackList) => {
+  updateUser = async (
+    userId,
+    id,
+    nickname,
+    email,
+    address,
+    type,
+    blackList
+  ) => {
     const updateUserData = await this.userModel.update(
       {
         id,
@@ -147,7 +154,7 @@ class UserRepository {
         email,
         address,
         type,
-        blackList
+        blackList,
       },
       { where: { userId } }
     );

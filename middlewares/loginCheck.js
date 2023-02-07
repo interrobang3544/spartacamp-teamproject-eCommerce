@@ -28,7 +28,6 @@ const userLogin = async (req, res, next) => {
     );
 
     User.findByPk(userId).then((user) => {
-      console.log(user.type); //2
       res.locals.user = user;
       next();
     });
@@ -65,7 +64,6 @@ const adminLogin = async (req, res, next) => {
     );
 
     User.findByPk(userId).then((user) => {
-      // console.log(user.type); //2
       if (user.type === 2) {
         res.locals.user = user;
         next();

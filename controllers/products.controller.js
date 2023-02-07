@@ -17,7 +17,6 @@ class ProductsController {
         data: productsInfo.rows,
       });
     } catch (error) {
-      console.log(error);
       return res.status(400).json({
         errorMessage: '상품 정보 조회에 실패하였습니다.',
       });
@@ -75,7 +74,6 @@ class ProductsController {
   };
 
   adminUpdateProduct = async (req, res, next) => {
-    console.log(req.body, req.file);
     const {
       modifyProductId,
       modifyProductName,
@@ -133,7 +131,6 @@ class ProductsController {
   getProductspec = async (req, res, next) => {
     const { productId } = req.params;
     const productspec = await this.productService.findProductSpec(productId);
-    // console.log(productspec);
 
     res.status(200).json({ data: productspec });
   };
