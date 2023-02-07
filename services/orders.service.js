@@ -23,7 +23,6 @@ class OrderSevice {
         order.dataValues;
       return { ...necessaryData, orderQuantity: quantity };
     });
-    // console.log('orderList : ', orderList);
 
     //+ 선택한 상품 정보 가져오기
     let productData = await Promise.all(
@@ -35,19 +34,29 @@ class OrderSevice {
       const { createdAt, updatedAt, ...necessaryData } = order;
       return necessaryData;
     });
-    // console.log('productData : ', productData);
 
     //+ 주문할 유저 정보 가져오기
     let user = await this.userRepository.findUserById(userId);
     const { createdAt, updatedAt, ...userNecessaryData } = user.dataValues;
     user = userNecessaryData;
-    // console.log('user : ', user);
 
     const orderProduct = orderList.map((order, idx) => {
       return { ...order, ...productData[idx] };
     });
-    // console.log('orderProduct : ', orderProduct);
     return { orderProduct, user };
+  };
+
+  completeOrder = async (orderInfo, request, address) => {
+    const data = await orderInfo.map((order) => ({
+      ...order.tableData,
+      request,
+      address,
+    }));
+    await this.orderRepository.createOrder(data);
+    await orderInfo.forEach((order) => {
+      this.basketRepository.deleteBasket(order.basketId);
+    });
+    return;
   };
 }
 

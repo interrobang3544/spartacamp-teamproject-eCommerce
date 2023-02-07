@@ -48,9 +48,9 @@ const handleOrderBtn = async () => {
     }),
   });
 
-  if (response === 201) {
+  if (response.status === 201) {
     alert('주문 완료');
-    window.location.href = '/';
+    window.location.href = '/baskets';
   }
 };
 
