@@ -234,5 +234,20 @@
       </div>
     </div>
     <!-- <script src="../static/scripts/home.js"></script> -->
+    <script>
+      function logout() {
+        $.ajax({
+          type: 'GET',
+          url: '/api/auth/logout',
+          success: function (response) {
+            alert(response.message);
+            window.location.href = '/login';
+          },
+          error: function (response) {
+            alert(response.responseJSON.message);
+          },
+        });
+      }
+    </script>
   </body>
 </html>

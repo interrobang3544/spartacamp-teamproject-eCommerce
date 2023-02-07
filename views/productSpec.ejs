@@ -129,6 +129,21 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      function logout() {
+        $.ajax({
+          type: 'GET',
+          url: '/api/auth/logout',
+          success: function (response) {
+            alert(response.message);
+            window.location.href = '/login';
+          },
+          error: function (response) {
+            alert(response.responseJSON.message);
+          },
+        });
+      }
+    </script>
   </body>
   <!-- <script type="text/javascript" src="../static/scripts/home.js"></script> -->
 </html>
