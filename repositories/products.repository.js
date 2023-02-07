@@ -135,6 +135,21 @@ class ProductRepository {
 
     return products;
   };
+
+  updateUserCount = async (productId, userCount) => {
+    const product = await this.findProductById(productId);
+    let totalCount = JSON.parse(JSON.stringify(product)).userCount;
+    totalCount += Number(userCount);
+    await this.productModel.update(
+      {
+        userCount: totalCount,
+      },
+      {
+        where: { productId },
+      }
+    );
+    return;
+  };
 }
 
 module.exports = ProductRepository;
