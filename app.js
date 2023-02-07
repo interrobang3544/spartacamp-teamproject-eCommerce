@@ -26,57 +26,6 @@ app.use('/admin', adminRouter);
 app.use('/api/auth', apiRouter);
 app.use('/users', usersRouter);
 
-// 카카오 소셜로그인
-app.get('/auth/kakao', (req, res) => {
-  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_ID}&redirect_uri=${process.env.KAKAO_URL}&response_type=code&scope=profile,account_email`;
-  res.redirect(kakaoAuthURL);
-});
-
-app.get('/auth/kakao/callback', async (req, res) => {
-  //여기서 axios를 사용한다.
-  //먼저 토큰을 만들어 주고,
-  let token;
-  try {
-    token = await axios({
-      method: 'POST',
-      url: `https://kauth.kakao.com/oauth/token`,
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-      data: qs.stringify({
-        grant_type: 'authorization_code', //특정 스트링
-        client_id: kakao.clientID,
-        client_secret: kakao.clientSecret,
-        redirectUri: kakao.redirectUri,
-        code: req.query.code,
-      }),
-    });
-  } catch (e) {
-    res.json(e.data);
-  }
-
-  console.log(token);
-
-  let user;
-  try {
-    user = await axios({
-      method: 'GET',
-      url: `https://kapi.kakao.com/v2/user/me`,
-      headers: {
-        Authorization: `Bearer ${token.data.access_token}`,
-      },
-    });
-  } catch (e) {
-    res.json(e.data);
-  }
-
-  console.log(user);
-
-  req.session.kakao = user.data; //세션에 담아주기.
-  //req.session = {  ['kakao]' : user.data, }
-  res.redirect('/');
-});
-
 // ejs루트-----------------------------------------------------------------------------------------------
 app.get('/login', (req, res) => {
   res.render('indexLogin', { join: false });

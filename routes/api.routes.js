@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
+
+// 소셜로그인
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const authMiddleware = require('../middlewares/auth');
 
@@ -25,6 +30,18 @@ router.get(
   }),
   // kakaoStrategy에서 성공한다면 콜백 실행
   (req, res) => {
+    console.log(req.user);
+    const accessToken = jwt.sign(
+      {
+        id: req.user.id,
+        nickname: req.user.nickname,
+      },
+      process.env.KAKAO_SECRET,
+      {
+        expiresIn: '1d',
+      }
+    );
+    res.cookie('accessToken', accessToken);
     res.redirect('/');
   }
 );
