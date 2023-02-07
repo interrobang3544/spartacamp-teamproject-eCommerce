@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const basketRouter = require('./routes/baskets.routes');
 const orderRouter = require('./routes/orders.routes');
-const loginMiddleware = require('./middlewares/loginCheck');
+const { userLogin, adminLogin } = require('./middlewares/loginCheck');
 const adminRouter = require('./routes/admin.routes');
 const apiRouter = require('./routes/api.routes');
 const usersRouter = require('./routes/users.routes');
@@ -70,7 +70,7 @@ app.get('/join', (req, res) => {
   res.render('indexLogin', { join: true });
 });
 
-app.get('/chattingOnline', loginMiddleware, (req, res) => {
+app.get('/chattingOnline', userLogin, (req, res) => {
   // 로그인이 된 상태면 마이페이지로, 안됐다면 로그인페이지로
   if (res.locals.user) {
     res.render('chatting');
@@ -79,7 +79,7 @@ app.get('/chattingOnline', loginMiddleware, (req, res) => {
   }
 });
 
-app.get('/mypage', loginMiddleware, (req, res) => {
+app.get('/mypage', userLogin, (req, res) => {
   // 로그인이 된 상태면 마이페이지로, 안됐다면 로그인페이지로
   if (res.locals.user) {
     res.render('mypage');
@@ -88,7 +88,7 @@ app.get('/mypage', loginMiddleware, (req, res) => {
   }
 });
 
-app.get('/mypage/changeUserData', loginMiddleware, (req, res) => {
+app.get('/mypage/changeUserData', userLogin, (req, res) => {
   // 로그인이 된 상태면 회원정보 변경페이지로, 안됐다면 로그인페이지로
   if (res.locals.user) {
     res.render('changeMypage');
@@ -97,7 +97,7 @@ app.get('/mypage/changeUserData', loginMiddleware, (req, res) => {
   }
 });
 
-app.get('/mypage/changePassword', loginMiddleware, (req, res) => {
+app.get('/mypage/changePassword', userLogin, (req, res) => {
   // 로그인이 된 상태면 비밀번호 변경페이지로, 안됐다면 로그인페이지로
   if (res.locals.user) {
     res.render('changePassword');
@@ -106,16 +106,21 @@ app.get('/mypage/changePassword', loginMiddleware, (req, res) => {
   }
 });
 
-app.get('/admin-users', (req, res) => {
+app.get('/admin-users', adminLogin, (req, res) => {
   res.render('admin-users');
 });
 
-app.get('/admin-products', (req, res) => {
+app.get('/admin-products', adminLogin, (req, res) => {
   res.render('admin-products');
 });
 
-app.get('/', (req, res) => {
-  res.render('home');
+app.get('/', userLogin, (req, res) => {
+  // 로그인이 된 상태면 비밀번호 변경페이지로, 안됐다면 로그인페이지로
+  if (res.locals.user) {
+    res.render('home', { login: true });
+  } else {
+    res.render('home', { login: false });
+  }
 });
 
 app.get('/:productId', (req, res) => {

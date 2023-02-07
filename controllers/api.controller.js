@@ -93,7 +93,9 @@ class ApiController {
       // res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
       res.cookie('accessToken', accessToken);
 
-      return res.status(200).json({ message: '로그인 성공.' });
+      return res
+        .status(200)
+        .json({ message: '로그인 성공.', data: user[0].type });
     } catch (error) {
       return res.status(400).json({ errorMessage: '로그인 실패.' });
     }
