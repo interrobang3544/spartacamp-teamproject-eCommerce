@@ -105,6 +105,7 @@ app.get('/mypage/changePassword', userLogin, (req, res) => {
   }
 });
 
+// admin이 로그인했을때 admin페이지로 이동하도록 미들웨어 추가
 app.get('/admin-users', adminLogin, (req, res) => {
   res.render('admin-users');
 });
@@ -114,7 +115,7 @@ app.get('/admin-products', adminLogin, (req, res) => {
 });
 
 app.get('/', userLogin, (req, res) => {
-  // 로그인이 된 상태면 비밀번호 변경페이지로, 안됐다면 로그인페이지로
+  // 로그인이 된 상태면 로그아웃, 안됐다면 로그인
   if (res.locals.user) {
     res.render('home', { login: true });
   } else {
