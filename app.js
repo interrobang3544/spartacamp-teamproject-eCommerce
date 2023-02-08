@@ -72,7 +72,11 @@ app.get('/join', (req, res) => {
 app.get('/chattingOnline', userLogin, (req, res) => {
   // 로그인이 된 상태면 마이페이지로, 안됐다면 로그인페이지로
   if (res.locals.user) {
-    res.render('chatting');
+    if (res.locals.user.type === 2) {
+      res.render('chatting', { admin: true });
+    } else {
+      res.render('chatting', { admin: false });
+    }
   } else {
     res.render('indexLogin', { join: false });
   }

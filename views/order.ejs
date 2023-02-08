@@ -9,6 +9,7 @@
       href="./images/shortcut_icon.ico"
       type="image/x-icon"
     />
+    <link rel="stylesheet" href="./styles/header.css" />
     <link rel="stylesheet" href="./styles/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Optional JavaScript -->
@@ -33,26 +34,7 @@
     <title>공구해조 | 주문</title>
   </head>
   <body>
-    <header class="site-header">
-      <nav class="site-header__nav">
-        <div class="site-header__nav__home">
-          <a href="/">공구해조</a>
-        </div>
-        <div class="site-header__nav__columns">
-          <a href="/baskets">장바구니</a>
-          <a href="/mypage">마이페이지</a>
-          <a href="/chattingOnline">실시간 상담 채팅</a>
-          <button
-            type="button"
-            class="btn btn-link"
-            id="logoutBtn"
-            onclick="logout()"
-          >
-            Log Out
-          </button>
-        </div>
-      </nav>
-    </header>
+    <%- include('mypageHeader.ejs') %>
     <main class="order-screen">
       <h1 class="screen__title">주문내역</h1>
       <ul class="product-list order-screen__list">

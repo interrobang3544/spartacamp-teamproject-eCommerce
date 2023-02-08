@@ -16,6 +16,7 @@
       integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="./styles/header.css" />
     <link rel="stylesheet" href="/./styles/loginHeader.css" />
     <link rel="stylesheet" href="/./styles/chatting.css" />
     <link rel="stylesheet" href="/./styles/loginModal.css" />
@@ -23,8 +24,8 @@
   </head>
   <body>
     <!-- header -->
-    <%- include('mypageHeader.ejs') %>
-
+    <% if(admin) { %> <%- include('adminHeader.ejs') %> <% }else{ %> <%-
+      include('mypageHeader.ejs') %> <% } %>
     <div id="main">
       <div>
         <div id="room">
