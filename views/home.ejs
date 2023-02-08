@@ -46,14 +46,14 @@
               let count = e.userCount;
               let created = e.createdAt;
               let updated = e.updatedAt;
-              let temp_html = `<a class ="divTextHidden" href="/${id}"><div class="products">
+              let temp_html = `<div class="col"> <a class ="divTextHidden" href="/${id}"><div class="products">
                             <div class="photoBox">
                               <img src="${photo}"/>
                             </div>
                             <p>${name}</p>
                             <p>${price}원</p>
                           </div></a>
-                          <div class = "displayNone">${spec}${quantity}${count}${created}${updated}</div>`;
+                          <div class = "displayNone">${spec}${quantity}${count}${created}${updated}</div></div>`;
               $('.product_list').append(temp_html);
             }
           },
@@ -142,7 +142,7 @@
             let randomSpec = random.productExp;
             let randomPhoto = random.productPhoto;
             let price = random.price;
-            let random_html = `<a class ="divTextHidden" href="/${randomId}"><div><img src="${randomPhoto}"/></div>
+            let random_html = `<a class ="divTextHidden" href="/${randomId}"><div><img id="randImg" src="${randomPhoto}"/></div>
                         <div><h2>${randomName}</h2></div>
                         <div>${randomSpec}
                           <p>${price}원</p>
@@ -189,9 +189,13 @@
       .products {
         padding: 5px;
         margin: 10px;
-        width: 250px;
+        width: 300px;
         border: 1px solid;
         flex-direction: row;
+      }
+      
+      .productsBox {
+        width: 1330px;
       }
 
       .productBox {
@@ -206,6 +210,10 @@
 
       .photoBox img {
         height: 120px;
+      }
+
+      #randImg {
+        height: 240px;
       }
 
       .navTextHidden {
@@ -235,7 +243,7 @@
         <option value="오래된순" onchange={get_downsorted_products}>오래된순</option>
       </select> -->
       <div class="productsBox">
-        <div class="product_list"></div>
+        <div class="row row-cols-4 product_list"></div>
       </div>
     </div>
     <!-- <script src="../static/scripts/home.js"></script> -->
