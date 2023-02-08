@@ -15,6 +15,7 @@ function login() {
     },
     success: function (response) {
       customAlert(response.message);
+      console.log(response.data)
       if (response.data === 2) {
         window.location.replace('/admin-users');
       } else {
