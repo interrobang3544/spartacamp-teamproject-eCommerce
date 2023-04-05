@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공구해조 - Admin Page</title>
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/admin-users.css" />
+    <!-- bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <%- include('adminHeader.ejs') %>
+
+    <div id="main-container">
+      <div class="title">
+        <h1>회원 리스트</h1>
+      </div>
+      <table id="user-list" class="tg"></table>
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+      <ul id="page-num" class="pagination justify-content-center"></ul>
+    </nav>
+
+    <!-- 검색창 -->
+    <div class="container-fluid">
+        <input class="search" id="search" type="search" placeholder="아이디/닉네임/이메일/주소" aria-label="Search">
+        <button class="btn btn-outline-success" onclick="getUsers(1)">검색</button>
+    </div>
+
+    <!-- 회원 수정 모달창 -->
+    <div
+      class="modal fade"
+      id="userModifyModal"
+      tabindex="-1"
+      aria-labelledby="userModifyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">상품 정보 수정</h5>
+            <button
+              type="button"
+              class="btn-close btn-confirm"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="modifyuserId" id="modify-userId" />
+
+            <label for="modify-user-id" class="col-form-label">아이디</label>
+            <input
+              type="text"
+              name="modifyuserName"
+              class="form-control"
+              id="modify-user-id"
+            />
+
+            <label for="modify-user-nickname" class="col-form-label"
+              >닉네임</label
+            >
+            <input
+              type="text"
+              name="modifyuserExp"
+              class="form-control"
+              id="modify-user-nickname"
+            />
+
+            <label for="modify-user-email" class="col-form-label">이메일</label>
+            <input
+              type="text"
+              name="modifyPrice"
+              class="form-control"
+              id="modify-user-email"
+            />
+
+            <label for="modify-user-address" class="col-form-label">주소</label>
+            <input
+              type="text"
+              name="modifyQuantity"
+              class="form-control"
+              id="modify-user-address"
+            />
+            <label for="modify-user-class" class="col-form-label">회원 등급</label>
+            <select class="form-select" id="modify-user-type" aria-label="Default select example">
+              <option selected value="0">일반</option>
+              <option value="1">VIP</option>
+              <option value="2">관리자</option>
+            </select>
+            <label for="modify-user-blacked" class="col-form-label">블랙 리스트</label>         
+            <div>
+              <input class="form-check-input" type="checkbox" id="modify-user-blackList" value="" aria-label="...">
+            </div>
+            <div id="btn-box"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="./scripts/admin-users.js" type="text/javascript"></script>
+  </body>
+</html>

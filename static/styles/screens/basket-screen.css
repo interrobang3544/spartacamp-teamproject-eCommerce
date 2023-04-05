@@ -1,0 +1,25 @@
+.basket-screen {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 70px 70px auto;
+}
+
+.basket-screen__list {
+  height: 700px;
+}
+
+.order-box {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.order-box button {
+  margin-left: 10px;
+  background-color: #42a5f5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+}
