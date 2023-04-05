@@ -141,10 +141,4 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-# project settings
-config/config.json
-
 # End of https://www.toptal.com/developers/gitignore/api/node
-
-# upload한 이미지 파일
-static/uploads
